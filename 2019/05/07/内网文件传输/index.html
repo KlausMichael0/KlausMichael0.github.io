@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="设计并实现一个局域网内部的文件传送工具，使用TCP协议进行可靠文字传输。">
+<meta name="keywords" content="Inner-File-Trans">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网文件传输">
+<meta property="og:url" content="http://yoursite.com/2019/05/07/内网文件传输/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="设计并实现一个局域网内部的文件传送工具，使用TCP协议进行可靠文字传输。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-07T00:54:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内网文件传输">
+<meta name="twitter:description" content="设计并实现一个局域网内部的文件传送工具，使用TCP协议进行可靠文字传输。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/07/内网文件传输/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>内网文件传输 | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/内网文件传输/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内网文件传输
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-07 08:31:26 / Modified: 08:54:08" itemprop="dateCreated datePublished" datetime="2019-05-07T08:31:26+08:00">2019-05-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>设计并实现一个局域网内部的文件传送工具，使用TCP协议进行可靠文字传输。</p>
+<a id="more"></a>
+<h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><h4 id="最终"><a href="#最终" class="headerlink" title="最终"></a>最终</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> Tkinter</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListenThread</span><span class="params">(threading.Thread)</span>:</span>  <span class="comment"># 监听线程</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, edit, server)</span>:</span> <span class="comment">#edit和server都是传递的参数</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.edit = edit  <span class="comment"># 保存窗口中的多行文本框</span></span><br><span class="line">        self.server = server</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span>  <span class="comment"># 进入监听状态</span></span><br><span class="line">        <span class="keyword">while</span> <span class="number">1</span>:  <span class="comment"># 使用while循环等待连接</span></span><br><span class="line">            <span class="keyword">try</span>:  <span class="comment"># 捕获异常</span></span><br><span class="line">                client, addr = self.server.accept()  <span class="comment"># 等待连接 接受TCP连接并返回（conn,address）,其中conn是新的套接字对象，可以用来接收和发送数据。address是连接客户端的地址。</span></span><br><span class="line">                self.edit.insert(Tkinter.END, <span class="string">'连接来自:%s:%d\n'</span> %</span><br><span class="line">                                 addr)  <span class="comment"># 向文本框输出状态</span></span><br><span class="line">                data = client.recv(<span class="number">1024</span>)  <span class="comment"># 接收数据 接受TCP套接字的数据。数据以字符串形式返回，bufsize指定要接收的最大数据量  1024字节=1kb</span></span><br><span class="line">                print(<span class="string">'recieve filename = '</span> + data)</span><br><span class="line">                self.edit.insert(Tkinter.END, <span class="string">'收到的文件:%s\n'</span> % data)  <span class="comment"># 向文本框中输出数据</span></span><br><span class="line">                file = os.open(data, os.O_WRONLY | os.O_CREAT | os.O_EXCL )  <span class="comment"># 创建文件  打开收到的文件，读取其中的数据，创建新文件   只写/创建/判断是否已经存在此文件</span></span><br><span class="line">                <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">                    rdata = client.recv(<span class="number">1024</span>)  <span class="comment"># 接收数据</span></span><br><span class="line">                    print(<span class="string">'recieve data = '</span> + rdata)</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> rdata:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">                os.write(file, rdata)  <span class="comment"># 将数据写入文件</span></span><br><span class="line">                os.close(file)  <span class="comment"># 关闭文件</span></span><br><span class="line">                client.close()  <span class="comment"># 关闭同客户端的连接</span></span><br><span class="line">                self.edit.insert(Tkinter.END, <span class="string">'传送完毕\n'</span>)  <span class="comment"># 向文本框中输出状态</span></span><br><span class="line">            <span class="keyword">except</span> IndexError, value:</span><br><span class="line">                self.edit.insert(Tkinter.END, value)</span><br><span class="line">                self.edit.insert(Tkinter.END, <span class="string">'关闭连接\n'</span>)</span><br><span class="line">                <span class="keyword">break</span>  <span class="comment"># 结束循环</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Control</span><span class="params">(threading.Thread)</span>:</span>  <span class="comment"># 控制线程</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.edit = edit  <span class="comment"># 保留窗口中的多行文本框</span></span><br><span class="line">        self.event = threading.Event()  <span class="comment"># 创建Event对象，用于多线程间通信</span></span><br><span class="line">        self.event.clear()  <span class="comment"># 清楚event标志  </span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  <span class="comment"># 创建socket连接(TCP)  UDP协议使用socket.SOCK_DGRAM创建</span></span><br><span class="line">        server.bind(<span class="string">''</span>, <span class="number">2333</span>)  <span class="comment"># 绑定本地端口2333</span></span><br><span class="line">        server.listen(<span class="number">5</span>)  <span class="comment"># 开始监听  指定在拒绝连接之前，操作系统可以挂起的最大连接数量</span></span><br><span class="line">        self.edit.insert(Tkinter.END, <span class="string">'正在等待连接\n'</span>)  <span class="comment"># 向文本框中输出状态</span></span><br><span class="line">        self.lt = ListenThread(self.edit, server)  <span class="comment"># 创建监听线程对象</span></span><br><span class="line">        self.lt.setDaemon(<span class="literal">True</span>)  <span class="comment">#将监听线程设置为守护进程  这时候，要是主线程A执行结束了，就不管子线程B是否完成,一并和主线程A退出.这就是setDaemon方法的含义</span></span><br><span class="line">        self.lt.start()  <span class="comment"># 执行监听线程</span></span><br><span class="line">        self.event.wait()  <span class="comment"># 进入等待状态</span></span><br><span class="line">        server.close()  <span class="comment"># 关闭连接</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">stop</span><span class="params">(self)</span>:</span>  <span class="comment"># 结束控制线程</span></span><br><span class="line">        self.event.set()  <span class="comment"># 设置event标志  进程会一直等待直到event对象的内部信号标志位为真。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window</span>:</span>  <span class="comment"># 主窗口</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        self.root = root</span><br><span class="line">        self.butlisten = Tkinter.Button(</span><br><span class="line">            root, text=<span class="string">'开始监听'</span>, command=self.listen)  <span class="comment"># 创建组件</span></span><br><span class="line">        self.butlisten.place(x=<span class="number">20</span>, y=<span class="number">15</span>)</span><br><span class="line">        self.butclose = Tkinter.Button(root, text=<span class="string">'停止监听'</span>, command=self.close)</span><br><span class="line">        self.butclose.place(x=<span class="number">120</span>, y=<span class="number">15</span>)</span><br><span class="line">        self.edit = Tkinter.Text(root)</span><br><span class="line">        self.edit.place(y=<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listen</span><span class="params">(self)</span>:</span>  <span class="comment"># 处理按钮事件</span></span><br><span class="line">        self.ctrl = Control(self.edit)  <span class="comment"># 创建控制线程对象</span></span><br><span class="line">        self.ctrl.setDaemon(<span class="literal">True</span>)  <span class="comment">#标记为守护进程，即使终端关闭之后也还会在后台运行。当主程序退出的时候，任何守护程序进程都会自动终止。</span></span><br><span class="line">        self.ctrl.start()  <span class="comment"># 执行控制线程</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.ctrl.stop()  <span class="comment"># 结束控制线程</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root = Tkinter.Tk()   <span class="comment">#root是将Tk类实例化的结果，是一个实例。这会创建一个Tk的顶层小部件（就是创建一个小窗口），它通常是应用程序的主窗口</span></span><br><span class="line">window = Window(root)</span><br><span class="line">root.mainloop() <span class="comment">#进入到事件循环，一旦检测到了事件，就刷新部件   就像连环画由多幅图组成   这个的作用就是去翻它！</span></span><br></pre></td></tr></table></figure>
+<p>服务器端整体设计流程：</p>
+<ol>
+<li>创建顶层小部件</li>
+<li>定义<code>Window</code>类<ul>
+<li>重写<code>__init__</code>方法<ul>
+<li>创建组件<ul>
+<li>开始监听，按下此组件将会调用<code>listen()</code>方法</li>
+<li>停止监听，按下此组件将会调用<code>close()</code>方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>定义<code>listen()</code>方法<ul>
+<li>创建控制线程对象</li>
+<li>将控制线程对象标记为守护进程，当主程序退出时，任何守护进程都会自动终止。</li>
+<li>执行控制线程<ul>
+<li>重定义初始化函数，传入文本框，创建event对象，便于多线程通信</li>
+<li>重写run方法，创建基于TCP的socket连接，创建<strong>监听进程对象</strong>，执行监听进程并等待</li>
+<li><strong>监听进程</strong><ul>
+<li>重定义初始化函数，重写run方法，写入传输的文件数据</li>
+</ul>
+</li>
+<li>结束控制进程方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>定义<code>close()</code>方法<ul>
+<li>调用结束控制线程方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>定义<code>Control</code>类<ul>
+<li>重写<code>__init__</code>方法<ul>
+<li>创建线程，载入文本框</li>
+<li>创建Event对象，Event对象实现了简单的线程通信机制，它提供了设置信号、清除信号、等待等，如果信号标志位为假，则其他线程必须等待某个事件的发生，只有规定的事件发生并将标志位置为真时，其他线程才会被激活。</li>
+<li>清除Event对象的标志位（置为假）</li>
+</ul>
+</li>
+<li>定义<code>run()</code>方法<ul>
+<li>创建基于TCP的socket连接，绑定本地端口2333，开始监听</li>
+<li>创建监听进程，执行监听进程并等待</li>
+</ul>
+</li>
+<li>定义<code>stop()</code>方法<ul>
+<li>将Event的信号位置为真，即可结束控制进程。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>定义<code>ListenThread</code>类<ul>
+<li>重写<code>__init__</code>方法<ul>
+<li>传入多行文本框和socket连接</li>
+</ul>
+</li>
+<li>重写<code>run()</code>方法<ul>
+<li>进入监听状态。输出收到的文件的文件名</li>
+<li>判断是否已经存在同名文件，若不存在则创建新的文件</li>
+<li>接受文件中的数据，写入新文件中</li>
+<li>写入完成以后断开连接</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进入事件循环，使用<code>mainloop()</code></li>
+</ol>
+<p>​    </p>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><h3 id="最终-1"><a href="#最终-1" class="headerlink" title="最终"></a>最终</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> Tkinter</span><br><span class="line"><span class="keyword">import</span> tkFileDialog</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, root)</span>:</span>  <span class="comment"># 创建组件</span></span><br><span class="line">        label1 = Tkinter.Label(root, text=<span class="string">'IP'</span>)</span><br><span class="line">        label2 = Tkinter.Label(root, text=<span class="string">'Port'</span>)</span><br><span class="line">        label3 = Tkinter.Label(root, text=<span class="string">'文件'</span>)</span><br><span class="line">        label1.place(x=<span class="number">5</span>, y=<span class="number">5</span>)</span><br><span class="line">        label2.place(x=<span class="number">5</span>, y=<span class="number">30</span>)</span><br><span class="line">        label3.place(x=<span class="number">5</span>, y=<span class="number">55</span>)</span><br><span class="line"></span><br><span class="line">        self.entryIP = Tkinter.Entry(root)</span><br><span class="line">        self.entryIP.insert(Tkinter.END, <span class="string">'127.0.0.1'</span>)</span><br><span class="line">        self.entryPort = Tkinter.Entry(root)</span><br><span class="line">        self.entryPort.insert(Tkinter.END, <span class="string">'1051'</span>)</span><br><span class="line">        self.entryData = Tkinter.Entry(root)</span><br><span class="line">        self.entryData.insert(Tkinter.END, <span class="string">'Hello'</span>)</span><br><span class="line"></span><br><span class="line">        self.Recv = Tkinter.Text(root)</span><br><span class="line">        self.entryIP.place(x=<span class="number">40</span>, y=<span class="number">5</span>)</span><br><span class="line">        self.entryPort.place(x=<span class="number">40</span>, y=<span class="number">30</span>)</span><br><span class="line">        self.entryData.place(x=<span class="number">40</span>, y=<span class="number">55</span>)</span><br><span class="line"></span><br><span class="line">        self.Recv.place(y=<span class="number">105</span>)</span><br><span class="line">        self.send = Tkinter.Button(root, text=<span class="string">'发送数据'</span>, command=self.send)</span><br><span class="line">        self.openfile = Tkinter.Button(root, text=<span class="string">'浏览'</span>, command=self.open_file)</span><br><span class="line">        self.send.place(x=<span class="number">40</span>, y=<span class="number">80</span>)</span><br><span class="line">        self.openfile.place(x=<span class="number">170</span>, y=<span class="number">55</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span><span class="params">(self)</span>:</span>  <span class="comment"># 按钮事件</span></span><br><span class="line">        <span class="keyword">try</span>:  <span class="comment"># 异常处理</span></span><br><span class="line">            ip = self.entryIP.get()  <span class="comment"># 获取IP</span></span><br><span class="line">            port = self.entryPort.get()  <span class="comment"># 获取端口</span></span><br><span class="line">            filename = self.entryData.get()  <span class="comment"># 获取发送数据</span></span><br><span class="line">            tt = filename.split(<span class="string">'/'</span>)</span><br><span class="line">            name = tt[len(tt) - <span class="number">1</span>]</span><br><span class="line">            client = socket.socket(</span><br><span class="line">                socket.AF_INET, socket.SOCK_STREAM)  <span class="comment"># 创建socket对象</span></span><br><span class="line"></span><br><span class="line">            client.connect((ip, int(port)))  <span class="comment"># 连接服务器</span></span><br><span class="line">            print(<span class="string">'filename: '</span> + name)</span><br><span class="line">            client.send(name)  <span class="comment"># 发送数据</span></span><br><span class="line"></span><br><span class="line">            time.sleep(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">            file = os.open(filename, os.O_RDONLY |</span><br><span class="line">                           os.O_EXCL)  <span class="comment"># 打开文件</span></span><br><span class="line">            <span class="keyword">while</span> <span class="number">1</span>:  <span class="comment"># 发送文件</span></span><br><span class="line">                data = os.read(file, <span class="number">1024</span>)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                print(<span class="string">'filename data : '</span> + data)</span><br><span class="line">                client.send(data)</span><br><span class="line">            os.close(file)</span><br><span class="line">            client.close()  <span class="comment"># 关闭连接</span></span><br><span class="line">        <span class="keyword">except</span> IndexError, value:</span><br><span class="line">            print(value)</span><br><span class="line">            self.Recv.insert(Tkinter.END, <span class="string">'发送错误\n'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_file</span><span class="params">(self)</span>:</span></span><br><span class="line">        r = tkFileDialog.askopenfilename(</span><br><span class="line">            title=<span class="string">'Python Tkinter'</span>,</span><br><span class="line">            filetypes=[(<span class="string">'All Files'</span>, <span class="string">'*'</span>), (<span class="string">'Python'</span>, <span class="string">'*.py *.pyw'</span>)])</span><br><span class="line">        <span class="keyword">if</span> r:</span><br><span class="line">            self.entryData.delete(<span class="number">0</span>, Tkinter.END)</span><br><span class="line">            self.entryData.insert(Tkinter.END, r)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root = Tkinter.Tk()</span><br><span class="line">window = Window(root)</span><br><span class="line">root.mainloop()</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>​    </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Inner-File-Trans/" rel="tag"># Inner-File-Trans</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/组合实践2-白马股组合/" rel="next" title="组合实践--（2）白马股组合">
+                <i class="fa fa-chevron-left"></i> 组合实践--（2）白马股组合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器端"><span class="nav-number">1.</span> <span class="nav-text">服务器端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最终"><span class="nav-number">1.1.</span> <span class="nav-text">最终</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端"><span class="nav-number">1.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终-1"><span class="nav-number">2.</span> <span class="nav-text">最终</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

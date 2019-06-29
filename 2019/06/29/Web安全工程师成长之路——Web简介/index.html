@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Web简介，从入门到入狱">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全工程师之路————Web简介">
+<meta property="og:url" content="http://yoursite.com/2019/06/29/Web安全工程师成长之路——Web简介/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="Web简介，从入门到入狱">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-29T03:37:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web安全工程师之路————Web简介">
+<meta name="twitter:description" content="Web简介，从入门到入狱">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/29/Web安全工程师成长之路——Web简介/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Web安全工程师之路————Web简介 | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/29/Web安全工程师成长之路——Web简介/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Web安全工程师之路————Web简介
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-29 09:31:26 / Modified: 11:37:25" itemprop="dateCreated datePublished" datetime="2019-06-29T09:31:26+08:00">2019-06-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Web简介，从入门到入狱</p>
+<a id="more"></a>
+<h3 id="第一章–web简介"><a href="#第一章–web简介" class="headerlink" title="第一章–web简介"></a>第一章–web简介</h3><h4 id="第一节–Web介绍"><a href="#第一节–Web介绍" class="headerlink" title="第一节–Web介绍"></a>第一节–Web介绍</h4><ul>
+<li><p>Web—World Wide Web（万维网）</p>
+<ul>
+<li>Web发展史<ul>
+<li>Web1.0（服务器端）——Web2.0（客户端）</li>
+</ul>
+</li>
+<li><strong>Web工作流程</strong><ol>
+<li>用户在浏览器中输入网址。</li>
+<li>浏览器向对应网址的服务器发送请求。</li>
+<li>服务器与数据库交互。</li>
+<li>服务器向浏览器返回请求结果。</li>
+<li>浏览器向用户返回响应界面。</li>
+</ol>
+</li>
+<li><strong>浏览器的工作原理</strong><ol>
+<li>浏览器通过域名获取Web服务器IP地址（DNS解析）<ul>
+<li>浏览器向DNS服务器发送DNS请求。</li>
+<li>DNS服务器发送DNS响应。</li>
+</ul>
+</li>
+<li>浏览器根据IP地址与Web服务器通过HTTP协议交互<ul>
+<li>浏览器向Web服务器发送HTTP请求。</li>
+<li>Web服务器发送HTTP响应。</li>
+</ul>
+</li>
+<li>浏览器返回给用户响应界面</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Web架构的熟悉</p>
+<ul>
+<li><p>常见的Web<strong>前端</strong>相关的开发语言</p>
+<ul>
+<li>HTML—超文本标记语言。</li>
+<li>CSS—层叠样式表。</li>
+<li>JavaScript—直译式脚本语言。</li>
+</ul>
+</li>
+<li><p>常见的Web<strong>后端</strong>相关的开发语言</p>
+<ul>
+<li>Java—跨平台的语言，有许多优秀的框架。</li>
+<li>PHP—解释执行的脚本语言。</li>
+<li>GO—用Google公司开发的一门语言。</li>
+</ul>
+</li>
+<li><p>服务器（Server）</p>
+<ol>
+<li>有时Server表示硬件，也就是一台机器，它还有另一个名字：[主机]。</li>
+<li>更多时候，Server表示软件程序，这种程序主要用来对外提供某些服务，比如邮件服务、FTP服务、数据库服务、网页服务等。</li>
+</ol>
+<ul>
+<li>一般作为开发者谈及Server时指的是后者，也就是一个24小时运行的软件程序，一台主机上可以运行多个这样的程序。</li>
+</ul>
+</li>
+<li><p>数据库服务器</p>
+<ul>
+<li>由运行在局域网中的一台/多台<strong>计算机</strong>和<strong>数据库管理系统软件</strong>共同构成，数据库服务器为客户应用程序提供数据服务。</li>
+</ul>
+</li>
+<li><p>Web服务器</p>
+<ul>
+<li>提供Web服务的服务器（一般对外提供的是HTTP服务，也可以是其他服务）。</li>
+</ul>
+</li>
+<li><p>DNS服务器</p>
+<ul>
+<li>进行域名和与之相对应的IP地址转换的服务器。</li>
+<li>DNS中保存了一张域名和与之对应的IP地址的表，以解析消息的域名。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Question：我们在浏览器输入URL以后的Web流程</p>
+<ol>
+<li>DNS解析</li>
+<li>建立连接</li>
+<li>发送HTTP请求</li>
+<li>返回HTTP响应</li>
+<li>维持连接</li>
+<li>断开连接</li>
+<li>浏览器解析</li>
+</ol>
+<p>具体的过程在谢老师的计网书中有详细讲到。</p>
+</li>
+</ul>
+<h4 id="第二节–Web通信"><a href="#第二节–Web通信" class="headerlink" title="第二节–Web通信"></a>第二节–Web通信</h4><ul>
+<li><p>URL是什么、作用</p>
+<ul>
+<li><strong>URL</strong>是统一资源定位符，是因特网上标准的资源的地址。</li>
+<li>通过<strong>URL</strong>可以到达任何一个地方寻找需要的东西，比如文件、数据库、图像、新闻组等等，可以这样说，<strong>URL</strong>是Internet上的地址簿。</li>
+</ul>
+</li>
+<li><p>URL格式</p>
+<ul>
+<li><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; URI = scheme:[//authority]path[?query][#fragment]</span><br><span class="line">&gt; authority = [userinfo@]host[:port]</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p><code>scheme</code>：使用的底层协议。</p>
+</li>
+<li><p><code>authority</code>：服务器的域名或IP地址+服务器端口（HTTP默认端口为80）。</p>
+</li>
+<li><p><code>path</code>：访问资源的路径。</p>
+</li>
+<li><p><code>query</code>：发送给http服务器的数据。</p>
+</li>
+<li><p><code>fragment</code>：锚，用来指导浏览器动作的，对于服务器端完全无用。</p>
+</li>
+</ul>
+</li>
+<li><p>HTTP的报文结构</p>
+<ul>
+<li>HTTP请求<ul>
+<li>请求行（字段之间使用空格分割）<ul>
+<li>请求方法字段<ul>
+<li>GET方法：要求服务器将URL定位的资源放在响应报文的数据部分，回送给客户端，传递参数长度受限制，请求数据以地址的形式表现在请求行。</li>
+<li>POST方法：允许客户端给服务器提供较多的信息，将请求参数封装在HTTP请求数据中，大多用在页面的表单中。</li>
+</ul>
+</li>
+<li>URL字段</li>
+<li>HTTP协议版本字段</li>
+</ul>
+</li>
+<li>请求头部——由关键字/值对组成，每行一对，关键字和值用英文冒号<code>:</code>分割</li>
+<li>空行</li>
+<li>请求数据<ul>
+<li>不在GET方法中使用，而是在POST方法中使用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>HTTP响应<ul>
+<li>状态行——HTTP-Version Status-Code Reason-Phrase CRLF<ul>
+<li>HTTP-Version表示服务器HTTP协议的版本。</li>
+<li>Status-Code表示服务器发回的响应状态代码。</li>
+<li>Reason-Phrase表示状态代码的文本描述。</li>
+<li>CRLF为回车换行。</li>
+</ul>
+</li>
+<li>消息报头</li>
+<li>响应正文</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Cookies和Set-Cookie</p>
+<ul>
+<li>Web服务器通过发送一个<code>Set-Cookie</code>的HTTP信息头来创建一个cookies。</li>
+<li>当存在一个 cookie，并允许设置可选项，该 cookie 的值会在随后的每次请求中被发送至服务器，cookie 的值被存储在名为 Cookie 的 HTTP 消息头中，并且只包含了 cookie 的值，忽略全部设置选项。</li>
+</ul>
+</li>
+<li><p>Referer（HTTP请求头的一部分）的作用</p>
+<ul>
+<li>指示一个请求是从哪里链接过来，那么当一个请求并不是由链接触发产生的，那么自然也就不需要指定这个请求的链接来源。</li>
+<li>防盗链——只允许自己的网站访问自己的图片服务器。</li>
+<li>防止恶意请求——所有的动态请求必须Referer为自己的网站。</li>
+</ul>
+</li>
+<li><p>状态码</p>
+<ul>
+<li>1xx：指示信息–表示请求已接收，继续处理。</li>
+<li>2xx：成功–表示请求已被成功接收、理解、接受。</li>
+<li>3xx：重定向–要完成请求必须进行更进一步的操作。</li>
+<li>4xx：客户端错误–请求有语法错误或请求无法实现。</li>
+<li>5xx：服务器端错误–服务器未能实现合法的请求。</li>
+</ul>
+</li>
+<li><p>常见的状态代码、状态描述</p>
+<ul>
+<li>200 OK：客户端请求成功。</li>
+<li>400 Bad Request：客户端请求有语法错误，不能被服务器所理解。</li>
+<li>401 Unauthorized：请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用。</li>
+<li>403 Forbidden：服务器收到请求，但是拒绝提供服务。</li>
+<li>404 Not Found：请求资源不存在，举个例子：输入了错误的URL。</li>
+<li>500 Internal Server Error：服务器发生不可预期的错误。</li>
+<li>503 Server Unavailable：服务器当前不能处理客户端的请求，一段时间后可能恢复正常，举个例子：HTTP/1.1 200 OK（CRLF）。</li>
+</ul>
+</li>
+<li><p>Location</p>
+<ul>
+<li>要求网页浏览器加载其他网页，使用HTTP状态码3xx发送Location头（Location header）。</li>
+<li>提供有关新创建资源位置的信息。在这种情况下应该使用HTTP状态码201或202发送Location头。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Q1：熟悉常见浏览器协议<ul>
+<li>ftp/http/file，列出每一种协议的具体说明<ul>
+<li><code>ftp</code>：FTP（File Transfer Protocol，文件传输协议） 是 TCP/IP 协议组中的协议之一。FTP协议包括两个组成部分，其一为FTP服务器，其二为FTP客户端。其中FTP服务器用来存储文件，用户可以使用FTP客户端通过FTP协议访问位于FTP服务器上的资源。在开发网站的时候，通常利用FTP协议把网页或程序传到Web服务器上。此外，由于FTP传输效率非常高，在网络上传输大的文件时，一般也采用该协议。默认情况下FTP协议使用TCP端口中的 20和21这两个端口，其中20用于传输数据，21用于传输控制信息。但是，是否使用20作为传输数据的端口与FTP使用的传输模式有关，如果采用主动模式，那么数据传输端口就是20；如果采用被动模式，则具体最终使用哪个端口要服务器端和客户端协商决定。</li>
+<li><code>http</code>：HTTP（Hyper Text Transfer Protocol，超文本传输协议）是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。HTTP协议工作于客户端-服务端架构为上。浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。Web服务器根据接收到的请求后，向客户端发送响应信息。</li>
+<li><code>file</code>：FILE（File Protocol，本地文件传输协议）主要用于访问本地计算机中的文件，就如同在Windows资源管理器中打开文件一样。 </li>
+</ul>
+</li>
+<li>使用这3种类协议访问资源，了解访问结果（包括协议类型和资源）</li>
+</ul>
+</li>
+<li>Q2：熟悉HTTP<ul>
+<li>熟悉HTTP报文<ul>
+<li>学习HTTP请求报文中的请求方式：GET、POST、HEAD、PUT、DELETE、MOVE、OPTIONS、TRACE的意义，给出总结列表及用法<ul>
+<li><code>GET</code>：会显示请求的指定资源，一般只用于数据的读取。</li>
+<li><code>POST</code>：会向指定资源提交数据，请求服务器进行处理，如：表单提交、文件上传等。</li>
+<li><code>HEAD</code>：与<code>GET</code>方法一样，都是向服务器发出指定资源的请求，但是，服务器在响应<code>HEAD</code>请求时不会回传资源的内容部分，即：响应主体。这样，我们可以不传输全部内容的情况下，就可以获取服务器的响应头信息。<code>HEAD</code>方法常被用于客户端查看服务器的性能。</li>
+<li><code>PUT</code>：会身向指定资源位置上传其最新内容，<code>PUT</code>方法是<code>幂等(即f(f(x))=f(x))</code>的方法。通过该方法客户端可以将指定资源的最新数据传送给服务器取代指定的资源的内容。</li>
+<li><code>DELETE</code>：用于请求服务器删除所请求<code>URI</code>（统一资源标识符，Uniform Resource Identifier）所标识的资源。<code>DELETE</code>请求后指定资源会被删除，<code>DELETE</code>方法也是<code>幂等</code>的。</li>
+<li><code>MOVE</code>：请求服务器将指定的页面移至另一个网络地址。</li>
+<li><code>OPTIONS</code>：与<code>HEAD</code>类似，一般也是用于客户端查看服务器的性能。 这个方法会请求服务器返回该资源所支持的所有HTTP请求方法，该方法会用’*’来代替资源名称，向服务器发送<code>OPTIONS</code>请求，可以测试服务器功能是否正常。</li>
+<li><code>TRACE</code>：请求服务器回显其收到的请求信息，该方法主要用于HTTP请求的测试或诊断。</li>
+</ul>
+</li>
+<li>了解返回报文中常见状态码1XX–5XX的大致含义<ul>
+<li>1xx：指示信息–表示请求已接收，继续处理。</li>
+<li>2xx：成功–表示请求已被成功接收、理解、接受。</li>
+<li>3xx：重定向–要完成请求必须进行更进一步的操作。</li>
+<li>4xx：客户端错误–请求有语法错误或请求无法实现。</li>
+<li>5xx：服务器端错误–服务器未能实现合法的请求。</li>
+</ul>
+</li>
+<li>了解请求报文中User-Agent、Host、Cookie、X-Forwarded-For和返回包中server、Set-Cookie、 Content-Type、httponly、X-Frame-Options属性的含义<ul>
+<li>请求报文<ul>
+<li><code>User-Agent</code>：产生请求的浏览器类型。</li>
+<li><code>Host</code>：请求的主机名，允许多个域名同处一个IP地址，即虚拟主机。</li>
+<li><code>Cookie</code>：HTTP请求发送时，会把保存在该请求域名下的所有cookie值一起发送给web服务器。</li>
+<li><code>X-Forwarded-For</code>：用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段。</li>
+</ul>
+</li>
+<li>响应报文<ul>
+<li><code>server</code>：Web服务器软件名称。</li>
+<li><code>Set-Cookie</code>：设置http Cookie。</li>
+<li><code>Content-Type</code>：返回内容的MIME类型（多用途互联网邮件扩展类型，是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开）。</li>
+<li><code>httponly</code>：当cookie 有设定HttpOnly flag 时，浏览器会限制cookie 只能经由HTTP(S) 协定来存取。因此当网站有XSS 弱点时，若cookie 含有HttpOnly flag，则攻击者无法直接经由JavaScript 存取使用者的session cookie，可降低使用者身份被盗用的机率。</li>
+<li><code>X-Frame-Options</code>：用来给浏览器指示允许一个页面可否在<code>&lt;frame&gt;</code>、<code>&lt;iframe&gt;</code>或者<code>&lt;object&gt;</code>中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 （clickjacking） 的攻击。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>了解Base64编码（通常以一个或两个<code>=</code>结尾）<ul>
+<li>一种基于64个可打印字符来表示二进制数据的表示方法，3个字节可由4个可打印字符来表示。</li>
+<li>如果要编码的字节数不能被3整除，最后会多出1个或2个字节，那么可以使用下面的方法进行处理：先使用0字节值在末尾补足，使其能够被3整除，然后再进行Base64的编码。在编码后的Base64文本后加上一个或两个<code>=</code>号，代表补足的字节数。也就是说，当最后剩余两个八位字节（2个byte）时，最后一个6位的Base64字节块有四位是0值，最后附加上两个<code>=</code>号；如果最后剩余一个八位字节（1个byte）时，最后一个6位的base字节块有两位是0值，最后附加一个<code>=</code>号。</li>
+<li>Base64常用于在通常处理文本数据的场合，表示、传输、存储一些二进制数据，包括MIME的电子邮件及XML（可扩展标记语言，通过此种标记，计算机之间可以处理包含各种信息的文章等）的一些复杂数据。</li>
+</ul>
+</li>
+<li>熟悉HTTP基本认证<ul>
+<li>概念<ul>
+<li>基本认证（Basic access authentication）是一种用来允许网页浏览器或其他客户端程序在请求时提供用户名和口令形式的身份凭证的一种登录验证方式。</li>
+<li>在发送之前是以用户名追加一个<code>:</code>号然后串接上口令，并将得出的结果字符串再用<code>Base64</code>算法编码。例如，提供的用户名是<code>Aladdin</code>、口令是<code>open sesame</code>，则拼接后的结果就是<code>Aladdin:open sesame</code>，然后再将其用Base64编码，得到<code>QWxhZGRpbjpvcGVuIHNlc2FtZQ==</code>。最终将Base64编码的字符串发送出去，由接收者解码得到一个由冒号分隔的用户名和口令的字符串。</li>
+<li>编码这一步骤的目的并不是安全与隐私，而是为将用户名和口令中的不兼容的字符转换为均与HTTP协议兼容的字符集。</li>
+</ul>
+</li>
+<li>优点<ul>
+<li>基本所有流行的网页浏览器都支持基本认证</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>该方案建立在以下的假设的基础上，即：客户端和服务器主机之间的连接是安全可信的。特别是，如果没有使用<code>SSL/TLS</code>这样的传输层安全的协议，那么以明文传输的密钥和口令很容易被兰姐。</li>
+<li>现存的浏览器保存认证信息直到标签页或浏览器被关闭，或者用户清除历史记录。这意味着服务器端在用户不关闭浏览器的情况下，并没有一种有效的方法来让用户登出。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Q3（high-level）：简述HTTPS和HTTP的区别和联系，了解跟HTTPS相关的CA证书、SSL的概念<ul>
+<li>简单来说，HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全。</li>
+<li><a href="https://juejin.im/entry/58d7635e5c497d0057fae036" target="_blank" rel="noopener">详细解析HTTP与HTTPS的区别</a></li>
+<li>CA证书<ul>
+<li>如果用户想得到一份属于自己的证书，他应先向 CA 提出申请。在 CA 判明申请者的身份后，便为他分配一个公钥，并且 CA 将该公钥与申请者的身份信息绑在一起，并为之签字后，便形成证书发给申请者。</li>
+<li>如果一个用户想鉴别另一个证书的真伪，他就用 CA 的公钥对那个证书上的签字进行验证，一旦验证通过，该证书就被认为是有效的。证书实际是由证书签证机关（CA）签发的对用户的公钥的认证。</li>
+</ul>
+</li>
+<li>SSL—为网络通信提供安全及数据完整性的一种安全协议<ul>
+<li>认证用户和服务器，确保数据发送到正确的客户机和服务器。</li>
+<li>加密数据以防止数据中途被窃取。</li>
+<li>维护数据的完整性，确保数据在传输过程中不被改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Q4（high-level）：系统掌握HTTP协议知识—学习《HTTP权威指南》</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/08/上机报告/" rel="next" title="Java程序基础练习">
+                <i class="fa fa-chevron-left"></i> Java程序基础练习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一章–web简介"><span class="nav-number">1.</span> <span class="nav-text">第一章–web简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一节–Web介绍"><span class="nav-number">1.1.</span> <span class="nav-text">第一节–Web介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二节–Web通信"><span class="nav-number">1.2.</span> <span class="nav-text">第二节–Web通信</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

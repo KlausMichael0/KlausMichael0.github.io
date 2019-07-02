@@ -140,13 +140,13 @@
 
 
 
-  <meta name="description" content="基于access的网站搭建和SQL注入实验一. 实验目的1.了解常用web 脚本 2.了解常用web 脚本漏洞的利用点 二. 实验原理猜解表名： 　　 SQL SERVER的每一个数据库都会有用户表和系统表，在系统表sysobjects中， 数据库内创建的每个对象（约束、默认值、日志、规则、存储过程等）在sysobjects表中占一行，那么也就是说当前数据库的表名都会在该表内有存在。我们常用到的">
+  <meta name="description" content="了解常用Web脚本和脚本漏洞的利用点。">
 <meta name="keywords" content="Web-Test">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web安全实验——基于access的网站搭建和SQL注入">
 <meta property="og:url" content="http://yoursite.com/2019/07/02/Web安全实验——基于access的网站搭建和SQL注入/index.html">
 <meta property="og:site_name" content="Klaus&#39; Blog">
-<meta property="og:description" content="基于access的网站搭建和SQL注入实验一. 实验目的1.了解常用web 脚本 2.了解常用web 脚本漏洞的利用点 二. 实验原理猜解表名： 　　 SQL SERVER的每一个数据库都会有用户表和系统表，在系统表sysobjects中， 数据库内创建的每个对象（约束、默认值、日志、规则、存储过程等）在sysobjects表中占一行，那么也就是说当前数据库的表名都会在该表内有存在。我们常用到的">
+<meta property="og:description" content="了解常用Web脚本和脚本漏洞的利用点。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041713081/20b05d3c898d3a10ed0d18d4c58d2e6a.png">
 <meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041713081/83aaed5e6c3d7d5daac4a65f27f5bd0b.png">
@@ -158,10 +158,10 @@
 <meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041713081/36b771258c40c6cf150486c967240df8.png">
 <meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041713081/716d2a8a4786d3495190e21fd2ebc898.png">
 <meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041713081/69596cd3eaac66315c00414b8c30d48e.png">
-<meta property="og:updated_time" content="2019-07-02T15:13:49.000Z">
+<meta property="og:updated_time" content="2019-07-02T15:26:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web安全实验——基于access的网站搭建和SQL注入">
-<meta name="twitter:description" content="基于access的网站搭建和SQL注入实验一. 实验目的1.了解常用web 脚本 2.了解常用web 脚本漏洞的利用点 二. 实验原理猜解表名： 　　 SQL SERVER的每一个数据库都会有用户表和系统表，在系统表sysobjects中， 数据库内创建的每个对象（约束、默认值、日志、规则、存储过程等）在sysobjects表中占一行，那么也就是说当前数据库的表名都会在该表内有存在。我们常用到的">
+<meta name="twitter:description" content="了解常用Web脚本和脚本漏洞的利用点。">
 <meta name="twitter:image" content="http://202.204.62.252/uploads/course_data/201805041713081/20b05d3c898d3a10ed0d18d4c58d2e6a.png">
 
 
@@ -421,7 +421,7 @@
                 
               
 
-              <time title="Created: 2019-07-02 21:10:20 / Modified: 23:13:49" itemprop="dateCreated datePublished" datetime="2019-07-02T21:10:20+08:00">2019-07-02</time>
+              <time title="Created: 2019-07-02 21:10:20 / Modified: 23:26:51" itemprop="dateCreated datePublished" datetime="2019-07-02T21:10:20+08:00">2019-07-02</time>
             
 
             
@@ -460,7 +460,8 @@
       
 
       
-        <a id="more"></a>
+        <p>了解常用Web脚本和脚本漏洞的利用点。</p>
+<a id="more"></a>
 <h2 id="基于access的网站搭建和SQL注入实验"><a href="#基于access的网站搭建和SQL注入实验" class="headerlink" title="基于access的网站搭建和SQL注入实验"></a>基于access的网站搭建和SQL注入实验</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>1.了解常用web 脚本</p>
 <p>2.了解常用web 脚本漏洞的利用点</p>
 <h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>猜解表名：</p>

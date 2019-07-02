@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="XSS属于被动式的攻击。">
+<meta name="keywords" content="Web-Test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全实验——XSS跨站脚本攻击">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/Web安全实验——XSS跨站脚本攻击/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="XSS属于被动式的攻击。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/fa6064509421c6a1a9ef3edb9f7f859f.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/5183f5c8e4a32a84533ab87fdfc97ba7.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/109839f676183136a5bc77435da0adc5.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/4c7d7b83ddec5e27c9199d9eb4093cc5.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/0af2c7fa222d6233b773d3c62ec4cc7b.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/afa33e75ae7f9c488656a8421c2ffa8e.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/1459b7feb1c4757453b942707229017b.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/9b59183bb64b3c5ce6a8581ef8540689.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/aa7db40286f0895e3309f7d12ba7a750.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/c030a6c8b308fd6678edb80d75226c51.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/133ddc5f2d7d3f4df5750d23e1c4b330.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/9c8748e4f40f8d9ba63877ebd0dff608.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/a6fa95ef7318f1a6d729096d39bb3fda.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041712311/a6fa95ef7318f1a6d729096d39bb3fda.png">
+<meta property="og:updated_time" content="2019-07-02T15:17:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web安全实验——XSS跨站脚本攻击">
+<meta name="twitter:description" content="XSS属于被动式的攻击。">
+<meta name="twitter:image" content="http://202.204.62.252/uploads/course_data/201805041712311/fa6064509421c6a1a9ef3edb9f7f859f.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/02/Web安全实验——XSS跨站脚本攻击/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Web安全实验——XSS跨站脚本攻击 | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——XSS跨站脚本攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Web安全实验——XSS跨站脚本攻击
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 19:31:26 / Modified: 23:17:40" itemprop="dateCreated datePublished" datetime="2019-07-02T19:31:26+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>XSS属于被动式的攻击。</p>
+<a id="more"></a>
+<h2 id="XSS跨站脚本攻击实验"><a href="#XSS跨站脚本攻击实验" class="headerlink" title="XSS跨站脚本攻击实验"></a>XSS跨站脚本攻击实验</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>了解XSS漏洞的攻击原理及相关知识能够手工进行简单的攻击分析</p>
+<h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>XSS属于被动式的攻击。攻击者先构造一个跨站页面，利用<code>script</code>、<code>&lt;img&gt;</code>、<code>&lt;iframe&gt;</code>等各种方式使得用户浏览这个页面时，触发对被攻击站点的http 请求。此时，如果被攻击者已经在被攻击站点登录，就会持有该站点<code>cookie</code>。这样该站点会认为被攻击者发起了一个http请求,而实际上这个请求是在被攻击者不知情的情况下发起的，由此攻击者在一定程度上达到了冒充被攻击者的目的。精心的构造这个攻击请求，可以达到冒充发文，夺取权限等等多个攻击目的。在常见的XSS攻击实例中，这个请求是通过<code>script</code>来发起的，因此被称为<code>Cross Site  Script</code>。攻击Yahoo Mail的Yamanner蠕虫是一个著名的XSS攻击实例，当时的Yahoo Mail系统有一个漏洞，当用户在web上察看信件时，有可能执行到信件内的javascript代码。病毒可以利用这个漏洞使被攻击用户运行病毒的<code>scriot</code>。同时Yahoo Mail系统使用了Ajax技术，这样病毒的<code>script</code>可以很容易的向Yahoo Mail系统发起ajax请求，从而得到用户的地址簿，并发送病毒给他人。</p>
+<h2 id="三-实验内容"><a href="#三-实验内容" class="headerlink" title="三. 实验内容"></a>三. 实验内容</h2><p>介绍XSS漏洞基本原理手动对攻击点进行分析和攻击</p>
+<h2 id="四-实验环境描述"><a href="#四-实验环境描述" class="headerlink" title="四. 实验环境描述"></a>四. 实验环境描述</h2><p>1、 学生机与实验室网络直连；</p>
+<p>2、 VPC与实验室网络直连；</p>
+<p>3、 学生机与VPC物理链路连通； PC机操作系统为：windows7旗舰版 ip：172.16.1.155</p>
+<h2 id="五-实验步骤"><a href="#五-实验步骤" class="headerlink" title="五. 实验步骤"></a>五. 实验步骤</h2><p>一、 单击实验环境，单击实验环境，点击打开控制以启动网络拓扑中的电脑（即虚拟机）</p>
+<p>二、 win7默认用户名：admin，密码：123456</p>
+<p>三、 <strong>实验配置</strong>：1、进入实验虚拟机，打开xampp，开启Apache HTTP服务和MYSQL服务，如下图所示：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/fa6064509421c6a1a9ef3edb9f7f859f.png" alt="图片描述"></p>
+<p>2、打开dvwa网站，<a href="http://127.0.0.1/dvwa/login.php%EF%BC%8C%E8%BF%9B%E5%85%A5%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%EF%BC%8C%E7%99%BB%E9%99%86%E8%B4%A6%E5%8F%B7%EF%BC%9Aadmin" target="_blank" rel="noopener">http://127.0.0.1/dvwa/login.php，进入登陆界面，登陆账号：admin</a> 登陆密码：password。进入Setup，点击Create/Reset Database，创建数据模块。<img src="http://202.204.62.252/uploads/course_data/201805041712311/5183f5c8e4a32a84533ab87fdfc97ba7.png" alt="图片描述"></p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/109839f676183136a5bc77435da0adc5.png" alt="图片描述"></p>
+<p>四、 <strong>步骤1</strong>：打开存在漏洞的网站，<a href="http://127.0.0.1/dvwa/vulnerabilities/xss_r/" target="_blank" rel="noopener">http://127.0.0.1/dvwa/vulnerabilities/xss_r/</a> 安全等级设置为：low 将上述的url地址复制到浏览器的地址栏 进入如下界面：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/4c7d7b83ddec5e27c9199d9eb4093cc5.png" alt="图片描述">图 1 存在反射型XSS漏洞页面</p>
+<p><strong>步骤2</strong>：选择DVWA Security的安全级别，此处选择“low”。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/0af2c7fa222d6233b773d3c62ec4cc7b.png" alt="图片描述"> 图2 DVWA Security安全级别</p>
+<p><strong>步骤3</strong>：查看正常输入输出：在输入框中输入test，点击Submit，可以看到页面上的正常返回结果。说明这个页面的功能是将用户输入的信息直接发送给用户。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/afa33e75ae7f9c488656a8421c2ffa8e.png" alt="图片描述"> 图3 页面正常输入效果</p>
+<p><strong>步骤4</strong>：查看PHP源码：点击右下角的View Source，可以看到页面的PHP源码。从源码中可以看出，页面直接将用户输入的信息返回给用户。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/1459b7feb1c4757453b942707229017b.png" alt="图片描述"></p>
+<p>图 4 页面PHP源码</p>
+<p><strong>步骤5</strong>：进行攻击测试：在输入框中输入<code>&lt; ｓｃｒｉｐｔ &gt;alert(/XSS/)&lt; /ｓｃｒｉｐｔ &gt;</code>，可以看到非正常返回结果页面。同时在IP地址中可以看到输入内容的URL编码。由此说明，Web应用将未经验证的数据通过请求发送给客户端。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/9b59183bb64b3c5ce6a8581ef8540689.png" alt="图片描述"> 图 5 页面攻击效果</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/aa7db40286f0895e3309f7d12ba7a750.png" alt="图片描述"></p>
+<p>图 6 被攻击页面此时的IP</p>
+<p><strong>步骤6</strong>：验证此类漏洞的非持久性：重新访问该页面，点击刷新或再次点击右边XSS reflected，可以看见页面恢复正常，由此说明之前输入的信息未保存，是非持久性跨站脚本漏洞。</p>
+<p>图 7 重新访问后恢复正常的页面</p>
+<p><strong>存储型XSS攻击</strong></p>
+<p><strong>步骤1</strong>：打开存在漏洞的网站，<a href="http://127.0.0.1/dvwa/vulnerabilities/xss_s/" target="_blank" rel="noopener">http://127.0.0.1/dvwa/vulnerabilities/xss_s/</a></p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/c030a6c8b308fd6678edb80d75226c51.png" alt="图片描述"></p>
+<p>图 8 存在存储型XSS漏洞的页面</p>
+<p><strong>步骤2</strong>：查看正常输入输出：在Name的输入框中输入test，在Message的输入框中输入This is a test comment. 点击Sign Guestbook按钮，可以得到正常的返回结果。说明该网页的功能是用来用户发表署名和评论的。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/133ddc5f2d7d3f4df5750d23e1c4b330.png" alt="图片描述"></p>
+<p>图 9 正常输入效果</p>
+<p><strong>步骤3</strong>：查看PHP源码：点击右下角的View Source，可以看到页面的PHP源码。从源码中可以看出，页面允许用户存储未正确过滤的信息，显示的时候从数据库中读取。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/9c8748e4f40f8d9ba63877ebd0dff608.png" alt="图片描述"></p>
+<p>图 10 页面PHP源码</p>
+<p><strong>步骤4</strong>：进行攻击测试：在Name输入框中输入test，在Message输入框中输入<code>&lt; ｓｃｒｉｐｔ &gt;alert(/XSS/)&lt; /ｓｃｒｉｐｔ &gt;</code>，点击Sign Guestbook，再次访问页面就可以得到弹出的对话框结果。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/a6fa95ef7318f1a6d729096d39bb3fda.png" alt="图片描述"></p>
+<p>图 11 被攻击的页面</p>
+<p><strong>步骤5</strong>：验证漏洞的存储性：重新访问该页面，点击刷新或再次点击右边XSS stored,可以看到页面仍弹出之前的对话框。说明之前输入的信息被保存。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041712311/a6fa95ef7318f1a6d729096d39bb3fda.png" alt="图片描述"></p>
+<p>图 12 重新访问的页面</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web-Test/" rel="tag"># Web-Test</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/29/Web安全工程师成长之路——Web简介/" rel="next" title="Web安全工程师之路————Web简介">
+                <i class="fa fa-chevron-left"></i> Web安全工程师之路————Web简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/02/Web安全实验——SQL注入攻击/" rel="prev" title="Web安全实验——SQL注入攻击">
+                Web安全实验——SQL注入攻击 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS跨站脚本攻击实验"><span class="nav-number">1.</span> <span class="nav-text">XSS跨站脚本攻击实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-实验目的"><span class="nav-number">2.</span> <span class="nav-text">一. 实验目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-实验原理"><span class="nav-number">3.</span> <span class="nav-text">二. 实验原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-实验内容"><span class="nav-number">4.</span> <span class="nav-text">三. 实验内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-实验环境描述"><span class="nav-number">5.</span> <span class="nav-text">四. 实验环境描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-实验步骤"><span class="nav-number">6.</span> <span class="nav-text">五. 实验步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

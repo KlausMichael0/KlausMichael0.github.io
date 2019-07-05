@@ -140,40 +140,42 @@
 
 
 
-  <meta name="description" content="弱口令指的是仅包含简单数字和字母的口令。">
+  <meta name="description" content="利用w3af爬虫插件探测出目标网站的目录结构。">
 <meta name="keywords" content="Web-Test">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web安全实验——弱口令">
-<meta property="og:url" content="http://yoursite.com/2019/07/02/Web安全实验——弱口令/index.html">
+<meta property="og:title" content="Web安全实验——Web应用程序攻击和检查框架w3af">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/Web安全实验——Web应用程序攻击和检查框架w3af/index.html">
 <meta property="og:site_name" content="Klaus&#39; Blog">
-<meta property="og:description" content="弱口令指的是仅包含简单数字和字母的口令。">
+<meta property="og:description" content="利用w3af爬虫插件探测出目标网站的目录结构。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/341cac7c2c9c236967ffe0b48b15ab66.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/c2b5099a19d21ee451767fa83b417333.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/57b213740192be58209a3e6269353d69.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/4cd3ec8f4ff9107324a71695d43b6048.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/0062dfd81b891816f71e56f0e1316ba5.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/9339958ed9ce0208678aa11cc9a60525.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/356db175ca0f486773876a6debd28620.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/f1427bea546155fbb6bdd8b49a3d42a4.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/bbbbcd1b5aae0686c56cfa96549181c3.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/e2669a0083d16bae578cc86a7edcdd35.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/a73b56bb8bf0bd8ebff1ec1a74f0dce2.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/f31e9d00c44367343e182b0101c75ebc.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/c19c66526249b4403b4f221bc91564ce.png">
-<meta property="og:image" content="http://202.204.62.252/uploads/course_data/201805041715311/28b968f509a105e40d35c91f67eb9f3f.png">
-<meta property="og:updated_time" content="2019-07-02T15:16:28.000Z">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/8de8f5f243595aae5e7213408eae1045.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/95a613c7d0bc61b57ed6bc5fe701f4cf.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/8f1718f84ed34068bb938b7f73d1a4dc.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/f40e36b6b101e0c002ba1378ab83c513.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/0bdd01d86ffb67bb3bb5ac0d9147399e.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/c06b65f2f603848251e4bede8aaf4afd.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/6e80b55012df05d4535c938796399833.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/536c8c6fe5ee552a30a372e033343fd3.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/f5e0e04b98d6393d61d0a65ed785b5d3.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/2c3b605f7c4afe08cfe033cdaa66bc8a.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/67d426515f9588bc344be34247ba9e5f.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/b48c5881df93c0c0d618dccc4a36255c.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/de4702c7f5fe08ccf442b0c7d4c16c4d.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/feb1b9ac565e985151fdd7944d74958b.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/6666b6da6c4e85a638223b61448069e7.png">
+<meta property="og:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/76092315fb5146f132e9c869dcb13414.png">
+<meta property="og:updated_time" content="2019-07-05T08:37:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web安全实验——弱口令">
-<meta name="twitter:description" content="弱口令指的是仅包含简单数字和字母的口令。">
-<meta name="twitter:image" content="http://202.204.62.252/uploads/course_data/201805041715311/341cac7c2c9c236967ffe0b48b15ab66.png">
+<meta name="twitter:title" content="Web安全实验——Web应用程序攻击和检查框架w3af">
+<meta name="twitter:description" content="利用w3af爬虫插件探测出目标网站的目录结构。">
+<meta name="twitter:image" content="http://202.204.62.252/uploads/course_data/2018090311223413/8de8f5f243595aae5e7213408eae1045.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/02/Web安全实验——弱口令/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/05/Web安全实验——Web应用程序攻击和检查框架w3af/">
 
 
 
@@ -183,7 +185,7 @@
   };
 </script>
 
-  <title>Web安全实验——弱口令 | Klaus' Blog</title>
+  <title>Web安全实验——Web应用程序攻击和检查框架w3af | Klaus' Blog</title>
   
 
 
@@ -382,7 +384,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Web安全实验——弱口令/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/05/Web安全实验——Web应用程序攻击和检查框架w3af/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Klaus">
@@ -399,7 +401,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Web安全实验——弱口令
+          <h1 class="post-title" itemprop="name headline">Web安全实验——Web应用程序攻击和检查框架w3af
 
               
             
@@ -425,7 +427,7 @@
                 
               
 
-              <time title="Created: 2019-07-02 20:41:22 / Modified: 23:16:28" itemprop="dateCreated datePublished" datetime="2019-07-02T20:41:22+08:00">2019-07-02</time>
+              <time title="Created: 2019-07-05 14:31:26 / Modified: 16:37:56" itemprop="dateCreated datePublished" datetime="2019-07-05T14:31:26+08:00">2019-07-05</time>
             
 
             
@@ -464,39 +466,46 @@
       
 
       
-        <p>弱口令指的是仅包含简单数字和字母的口令。</p>
+        <p>利用w3af爬虫插件探测出目标网站的目录结构。</p>
 <a id="more"></a>
-<h2 id="后台弱口令发现与攻击实验"><a href="#后台弱口令发现与攻击实验" class="headerlink" title="后台弱口令发现与攻击实验"></a>后台弱口令发现与攻击实验</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>1.了解弱口令的危害；</p>
-<p>2.了解弱口令攻击的原理和方法；</p>
-<p>3.学会X-Scan的使用。</p>
-<h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>弱口令(weak password) 没有严格和准确的定义，通常认为容易被别人（他们有可能对你很了解）猜测到或被破解工具破解的口令均为弱口令。弱口令指的是仅包含简单数字和字母的口令，例如“123”、“abc”等，因为这样的口令很容易被别人破解，从而使用户的计算机面临风险，因此不推荐用户使用。</p>
-<h2 id="三-实验内容"><a href="#三-实验内容" class="headerlink" title="三. 实验内容"></a>三. 实验内容</h2><p>1.介绍弱口令的含义及危害 2.介绍弱口令的攻击原理及方法 3.掌握X-scan工具的使用方法</p>
-<h2 id="四-实验环境描述"><a href="#四-实验环境描述" class="headerlink" title="四. 实验环境描述"></a>四. 实验环境描述</h2><p>1、 学生机与实验室网络直连； 2、 VPC与实验室网络直连； 3、 学生机与VPC物理链路连通；</p>
-<p>pc机：windows7旗舰版 ip：172.16.1.156</p>
-<h2 id="五-实验步骤"><a href="#五-实验步骤" class="headerlink" title="五. 实验步骤"></a>五. 实验步骤</h2><p>注：实验中所有ip(如：172.17.135. <em>或 110.10.10.</em>)均要根据实际网络情况而改变，所用工具windows版的均在D:/tools中，linux版的均在 桌面 上。</p>
-<p>一、 单击实验环境，单击实验环境，点击打开控制以启动网络拓扑中的电脑（即虚拟机）</p>
-<p>二、 win7默认用户名：admin，密码：123456</p>
-<p>三、 步骤1：进入实验虚拟机，在“控制面板”中关闭Windows自带防火墙，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/341cac7c2c9c236967ffe0b48b15ab66.png" alt="图片描述"></p>
-<p>步骤2：首先在控制面板中打开程序，添加windows功能找到telnet服务，打开在“服务”中开启Windows的Telnet服务，如下图所示：<img src="http://202.204.62.252/uploads/course_data/201805041715311/c2b5099a19d21ee451767fa83b417333.png" alt="图片描述"></p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/57b213740192be58209a3e6269353d69.png" alt="图片描述"></p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/4cd3ec8f4ff9107324a71695d43b6048.png" alt="图片描述"></p>
-<p>步骤4：点击FileZilla服务的“Admin“，进入管理面板，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/0062dfd81b891816f71e56f0e1316ba5.png" alt="图片描述"> 步骤5：点击“Edit”-“Users”，在配置面板中添加一个弱口令用户，如“test/123456”,在“Shared folders”菜单中配置FTP路径，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/9339958ed9ce0208678aa11cc9a60525.png" alt="图片描述"></p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/356db175ca0f486773876a6debd28620.png" alt="图片描述"></p>
-<p>步骤6:打开X-Scan软件，进入配置界面，在“指定IP范围”内输入虚拟机的IP地址，本例为“192.168.192.128”，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/f1427bea546155fbb6bdd8b49a3d42a4.png" alt="图片描述"></p>
-<p>步骤7：在“全局设置”-“扫描模板”中勾选“开发服务”，“TELNET弱口令”，“FTP弱口令”，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/bbbbcd1b5aae0686c56cfa96549181c3.png" alt="图片描述"></p>
-<p>步骤8：在“全局设置”-“其他设置”中选择“无条件扫描”，并勾选“显示详细进度”，点击“确定”保存，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/e2669a0083d16bae578cc86a7edcdd35.png" alt="图片描述"></p>
-<p>步骤9：打开X-Scan所在目录，打开dat文件下的“telnet_user.dic”文件，如果文件中不含有“administrator”用户，则自行添加一个，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/a73b56bb8bf0bd8ebff1ec1a74f0dce2.png" alt="图片描述"> 步骤10：打开X-Scan主界面上点击“开始扫描”，则软件会开始扫描弱口令，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/f31e9d00c44367343e182b0101c75ebc.png" alt="图片描述"></p>
-<p>步骤11：扫描结束之后，在报告中可以查看扫描到的弱口令，如下图所示：</p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/c19c66526249b4403b4f221bc91564ce.png" alt="图片描述"></p>
-<p><img src="http://202.204.62.252/uploads/course_data/201805041715311/28b968f509a105e40d35c91f67eb9f3f.png" alt="图片描述"></p>
+<h2 id="H007004006-Web应用程序攻击和检查框架w3af"><a href="#H007004006-Web应用程序攻击和检查框架w3af" class="headerlink" title="H007004006-Web应用程序攻击和检查框架w3af"></a>H007004006-Web应用程序攻击和检查框架w3af</h2><h2 id="一-实验目的"><a href="#一-实验目的" class="headerlink" title="一. 实验目的"></a>一. 实验目的</h2><p>利用w3af爬虫插件探测出目标网站的目录结构。</p>
+<h2 id="二-实验原理"><a href="#二-实验原理" class="headerlink" title="二. 实验原理"></a>二. 实验原理</h2><p>1) W3AF是一个web应用安全的攻击、审计平台，通过增加插件来对功能进行扩展。这是一款用python写的工具，可以查看所有源代码。支持GUI，也支持命令行模式。 2) 本框架拥有三种类型的插件：漏洞挖掘（discovery）、漏洞分析（audit）和漏洞攻击（attack）。漏洞挖掘插件只负责一件事情：搜寻新的URL、表单和其它注入点（injection points）。Web spider便是一个经典的漏洞挖掘插件。这个插件以一个URL为输入，然后得到一个或多个注入点。当用户使用多个这种类型的插件时，这些插件会运行这样的循环：如果插件A在第一次运行时发现了一个新的URL,w3af内核将这个URL传递给插件B。如果插件B发现了一个新的URL，它也将被发送给插件A。这个过程将一直持续下去，所有的插件都将运行工作，占用应用资源，直到无法运行漏洞挖掘应用。漏洞分析插件则获取那些有漏洞挖掘插件找到的注入点，为了发现漏洞，漏洞分析插件会向所有可注入点发送特别设计的数据。例如使用一个漏洞分析插件来获取SQL注入的漏洞。漏洞攻击插件的作用是利用分析插件发现的漏洞。它们通常会得到一个远程服务器的shell，或者一个利用SQL注入漏洞获取的远程数据库表。</p>
+<h2 id="三-实验内容"><a href="#三-实验内容" class="headerlink" title="三. 实验内容"></a>三. 实验内容</h2><p>w3af爬虫插件探测出目标网站的目录结构</p>
+<h2 id="四-实验环境描述"><a href="#四-实验环境描述" class="headerlink" title="四. 实验环境描述"></a>四. 实验环境描述</h2><p>攻击机Kali操作系统 用户名密码为：root toor</p>
+<p>靶机</p>
+<p>用户名密码为：msfadmin msfadmin</p>
+<h2 id="五-实验步骤"><a href="#五-实验步骤" class="headerlink" title="五. 实验步骤"></a>五. 实验步骤</h2><p>一、启动w3af软件 1.1 单击桌面空白处，右键菜单选择“在终端中打开”。如图1所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/8de8f5f243595aae5e7213408eae1045.png" alt="图片描述"></p>
+<p>1.2 在终端中输入命令“w3af_console”，启动控制台。W3af有两种用户界面：控制台界面和图形界面。如图2所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/95a613c7d0bc61b57ed6bc5fe701f4cf.png" alt="图片描述"></p>
+<p>1.3 在终端中输入命令“help”,显示可用的命令参数。如图3所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/8f1718f84ed34068bb938b7f73d1a4dc.png" alt="图片描述"></p>
+<p>1.4 对命令参数的详细帮助可以使用help命令显示出来，例如help start。如图4所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/f40e36b6b101e0c002ba1378ab83c513.png" alt="图片描述"></p>
+<p>1.5 进入到配置菜单后，输入某个菜单即可切换到此菜单模式下，所有配置菜单均提供以下命令：help、view、set、back。这里选择target菜单。如图5所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/0bdd01d86ffb67bb3bb5ac0d9147399e.png" alt="图片描述"></p>
+<p>1.6 “view”命令用来列出所有可配置参数，set命令用来改变一个值，back命令返回上一层菜单。可以使用help参数名称，获取每一个配置参数的详细的帮助。如图6所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/c06b65f2f603848251e4bede8aaf4afd.png" alt="图片描述"></p>
+<h3 id="二、探测目标网站结构"><a href="#二、探测目标网站结构" class="headerlink" title="二、探测目标网站结构"></a>二、探测目标网站结构</h3><p>2.1 在终端中输入命令“w3af_console”，启动w3af。如图7所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/6e80b55012df05d4535c938796399833.png" alt="图片描述"></p>
+<p>2.2 启动插件。如图8所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/536c8c6fe5ee552a30a372e033343fd3.png" alt="图片描述"></p>
+<p>2.3 启用find_backdoors、phpinfo和web_spider这三个插件。如图9所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/f5e0e04b98d6393d61d0a65ed785b5d3.png" alt="图片描述"></p>
+<p>2.4 列出所有用于漏洞的插件。如图10所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/2c3b605f7c4afe08cfe033cdaa66bc8a.png" alt="图片描述"></p>
+<p>2.5 启用blind_sqli、file_upload、os_commanding、sqli和xss这五个插件。如图11所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/67d426515f9588bc344be34247ba9e5f.png" alt="图片描述"></p>
+<p>2.6 设置输出插件。如图12所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/b48c5881df93c0c0d618dccc4a36255c.png" alt="图片描述"></p>
+<p>2.7 设置输出信息的存储文件。如图13所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/de4702c7f5fe08ccf442b0c7d4c16c4d.png" alt="图片描述"></p>
+<p>2.8 查看存储设置参数。如图14所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/feb1b9ac565e985151fdd7944d74958b.png" alt="图片描述"></p>
+<p>2.9 设置目标地址参数。如图15所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/6666b6da6c4e85a638223b61448069e7.png" alt="图片描述"></p>
+<p>2.10 开始攻击。如图16所示</p>
+<p><img src="http://202.204.62.252/uploads/course_data/2018090311223413/76092315fb5146f132e9c869dcb13414.png" alt="图片描述"></p>
 
       
     </div>
@@ -533,8 +542,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/02/Web安全实验——文件上传/" rel="next" title="Web安全实验——文件上传">
-                <i class="fa fa-chevron-left"></i> Web安全实验——文件上传
+              <a href="/2019/07/03/Web安全实验——数据包处理程序scapy/" rel="next" title="Web安全实验——数据包处理程序scapy">
+                <i class="fa fa-chevron-left"></i> Web安全实验——数据包处理程序scapy
               </a>
             
           </div>
@@ -542,10 +551,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/02/Web安全实验——基于access的网站搭建和SQL注入/" rel="prev" title="Web安全实验——基于access的网站搭建和SQL注入">
-                Web安全实验——基于access的网站搭建和SQL注入 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -700,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#后台弱口令发现与攻击实验"><span class="nav-number">1.</span> <span class="nav-text">后台弱口令发现与攻击实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-实验目的"><span class="nav-number">2.</span> <span class="nav-text">一. 实验目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-实验原理"><span class="nav-number">3.</span> <span class="nav-text">二. 实验原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-实验内容"><span class="nav-number">4.</span> <span class="nav-text">三. 实验内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-实验环境描述"><span class="nav-number">5.</span> <span class="nav-text">四. 实验环境描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-实验步骤"><span class="nav-number">6.</span> <span class="nav-text">五. 实验步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#H007004006-Web应用程序攻击和检查框架w3af"><span class="nav-number">1.</span> <span class="nav-text">H007004006-Web应用程序攻击和检查框架w3af</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-实验目的"><span class="nav-number">2.</span> <span class="nav-text">一. 实验目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-实验原理"><span class="nav-number">3.</span> <span class="nav-text">二. 实验原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-实验内容"><span class="nav-number">4.</span> <span class="nav-text">三. 实验内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-实验环境描述"><span class="nav-number">5.</span> <span class="nav-text">四. 实验环境描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-实验步骤"><span class="nav-number">6.</span> <span class="nav-text">五. 实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二、探测目标网站结构"><span class="nav-number">6.1.</span> <span class="nav-text">二、探测目标网站结构</span></a></li></ol></li></ol></div>
             
 
           </div>

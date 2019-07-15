@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="分享一下审计zzcms8.2中发现的三个不同类型的漏洞。">
+<meta name="keywords" content="Code-audit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码审计——zzcms8.2漏洞原理">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/代码审计——zzcms8.2漏洞原理/index.html">
+<meta property="og:site_name" content="Klaus&#39; Blog">
+<meta property="og:description" content="分享一下审计zzcms8.2中发现的三个不同类型的漏洞。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-15T12:59:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码审计——zzcms8.2漏洞原理">
+<meta name="twitter:description" content="分享一下审计zzcms8.2中发现的三个不同类型的漏洞。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/15/代码审计——zzcms8.2漏洞原理/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>代码审计——zzcms8.2漏洞原理 | Klaus' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Klaus' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/代码审计——zzcms8.2漏洞原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Klaus">
+      <meta itemprop="description" content="Tough time don't last, tough people do.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Klaus' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代码审计——zzcms8.2漏洞原理
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-15 21:01:26 / Modified: 20:59:43" itemprop="dateCreated datePublished" datetime="2019-07-15T21:01:26+08:00">2019-07-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>分享一下审计zzcms8.2中发现的三个不同类型的漏洞。</p>
+<a id="more"></a>
+<ul>
+<li><p>存储型XSS</p>
+<ul>
+<li><p>首先分析输入位置： 在<code>/user/zxsave.php</code>文件中的如下代码块中将留言的内容插入到数据库中</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ($_POST[<span class="string">"action"</span>]==<span class="string">"add"</span>)&#123;</span><br><span class="line"><span class="comment">//判断是不是重复信息,为了修改信息时不提示这段代码要放到添加信息的地方</span></span><br><span class="line">$sql=<span class="string">"select title,editor from zzcms_zx where title='"</span>.$title.<span class="string">"'"</span>;</span><br><span class="line">$rs = query($sql); </span><br><span class="line">$row= num_rows($rs); </span><br><span class="line"><span class="keyword">if</span> ($row)&#123;</span><br><span class="line"><span class="keyword">echo</span> $f_array[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$isok=query(<span class="string">"Insert into zzcms_zx(bigclassid,bigclassname,smallclassid,smallclassname,title,link,laiyuan,keywords,description,groupid,jifen,content,img,editor,sendtime) values('$bigclassid','$bigclassname','$smallclassid','$smallclassname','$title','$link','$laiyuan','$keywords','$description','$groupid','$jifen','$content','$img','$editor','"</span>.date(<span class="string">'Y-m-d H:i:s'</span>).<span class="string">"')"</span>);  </span><br><span class="line">$id=insert_id();		</span><br><span class="line">&#125;<span class="keyword">elseif</span> ($_POST[<span class="string">"action"</span>]==<span class="string">"modify"</span>)&#123;</span><br><span class="line">$isok=query(<span class="string">"update zzcms_zx set bigclassid='$bigclassid',bigclassname='$bigclassname',smallclassid='$smallclassid',smallclassname='$smallclassname',title='$title',link='$link',laiyuan='$laiyuan',</span></span><br><span class="line"><span class="string">keywords='$keywords',description='$description',groupid='$groupid',jifen='$jifen',content='$content',img='$img',editor='$editor',</span></span><br><span class="line"><span class="string">sendtime='"</span>.date(<span class="string">'Y-m-d H:i:s'</span>).<span class="string">"',passed=0 where id='$id'"</span>);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>/user/zxsave.php</code>文件中包含了<code>/inc/conn.php</code>文件</p>
+</li>
+<li><p>在<code>/inc/conn.php</code>文件中包含了<code>/inc/stopsqlin.php</code>文件</p>
+</li>
+<li><p>在<code>/inc/stopsqlin.php</code>文件中对传入的数据的字符进行了实体化和转义处理</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">zc_check</span><span class="params">($string)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!is_array($string))&#123;</span><br><span class="line">		<span class="keyword">if</span>(get_magic_quotes_gpc())&#123;</span><br><span class="line">	 	<span class="keyword">return</span> htmlspecialchars(trim($string));</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> addslashes(htmlspecialchars(trim($string)));</span><br><span class="line">		&#125;</span><br><span class="line">	 &#125;</span><br><span class="line">	<span class="keyword">foreach</span>($string <span class="keyword">as</span> $k =&gt; $v) $string[$k] = zc_check($v);</span><br><span class="line">	<span class="keyword">return</span> $string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因此编辑资讯操作存在数据库中是以关键符号实体化和转义后存入，接着分析输出位置，在<code>/zx/show.php</code>中从数据库中取出数据，然后对<code>content</code>列做<code>stripfxg</code>处理</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$sql=<span class="string">"select * from zzcms_zx where id='$zxid'"</span>;</span><br><span class="line">$rs=query($sql);</span><br><span class="line">$row=fetch_array($rs);</span><br><span class="line"><span class="keyword">if</span> (!$row)&#123;</span><br><span class="line">showmsg(<span class="string">'不存在相关信息！'</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">query(<span class="string">"update zzcms_zx set hit=hit+1 where id='$zxid'"</span>);</span><br><span class="line">$bigclassid=$row[<span class="string">"bigclassid"</span>];</span><br><span class="line">$smallclassid=$row[<span class="string">"smallclassid"</span>];</span><br><span class="line">$title=$row[<span class="string">"title"</span>];</span><br><span class="line">$content=stripfxg($row[<span class="string">"content"</span>],<span class="keyword">true</span>);   <span class="comment">//stripfxg处理！</span></span><br><span class="line">$keywords=$row[<span class="string">"keywords"</span>];</span><br><span class="line">$description=$row[<span class="string">"description"</span>];</span><br><span class="line">$laiyuan=$row[<span class="string">"laiyuan"</span>];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跟入<code>stripfxg</code>方法，在<code>/inc/function.php</code>文件的第577行发现该方法，分析该方法知道是对传入的数据进行实体化和转义的还原操作，因此<code>content</code>列的数据经过该方法的处理后，便还原为原本的字符串。</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stripfxg</span><span class="params">($string,$htmlspecialchars_decode=false,$nl2br=false)</span> </span>&#123;<span class="comment">//去反斜杠 </span></span><br><span class="line">$string=stripslashes($string);<span class="comment">//去反斜杠,不开get_magic_quotes_gpc 的情况下，在stopsqlin中都加上了，这里要去了</span></span><br><span class="line"><span class="keyword">if</span> ($htmlspecialchars_decode==<span class="keyword">true</span>)&#123;</span><br><span class="line">$string=htmlspecialchars_decode($string);<span class="comment">//转html实体符号</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ($nl2br==<span class="keyword">true</span>)&#123;</span><br><span class="line">$string=nl2br($string);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> $string; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后在<code>/zx/show.php</code>中调用<code>showcontent</code>和<code>Payjf</code>等方法，将数据输出到页面上，但是也没有对一些危险字符进行安全处理，所以此处存在存储型XSS。</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ($groupid==<span class="number">0</span>)&#123;</span><br><span class="line">$zxcontent=showcontent();</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="keyword">isset</span>($_COOKIE[<span class="string">"UserName"</span>]) || $_COOKIE[<span class="string">"UserName"</span>]==<span class="string">""</span>) &#123;</span><br><span class="line">	$zxcontent=<span class="string">"&lt;div class='box'&gt;"</span>;</span><br><span class="line">	$zxcontent=$zxcontent.$msg.$msg2;</span><br><span class="line">	$zxcontent=$zxcontent.<span class="string">"&lt;/div&gt;"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123; </span><br><span class="line">	$sqln=<span class="string">"select groupid from zzcms_user where username='"</span>.$_COOKIE[<span class="string">"UserName"</span>].<span class="string">"'"</span>;</span><br><span class="line">	$rsn=query($sqln);</span><br><span class="line">	$rown=fetch_array($rsn);				</span><br><span class="line">	$groupid_user=$rown[<span class="string">"groupid"</span>];</span><br><span class="line">		<span class="keyword">if</span> ($groupid_user&gt;=$groupid)&#123;</span><br><span class="line">		$zxcontent=showcontent();</span><br><span class="line">		&#125;<span class="keyword">elseif</span>($groupid_user&lt;$groupid)&#123;</span><br><span class="line">			<span class="keyword">if</span> (jifen==<span class="string">"Yes"</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>($jifen==<span class="number">0</span>)&#123;<span class="comment">//当用户设定为不让用积分查看时</span></span><br><span class="line">				$zxcontent=<span class="string">"&lt;div class='box'&gt;"</span>.$msg.$msg1.<span class="string">"&lt;/div&gt; "</span>;</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				$zxcontent=Payjf();<span class="comment">//Payjf方法</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;<span class="keyword">elseif</span> (jifen==<span class="string">"No"</span>)&#123;</span><br><span class="line">			$zxcontent=<span class="string">"&lt;div class='box'&gt;"</span>.$msg.$msg1.<span class="string">"&lt;/div&gt; "</span>;</span><br><span class="line">       		&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Payjf</code>方法</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Payjf</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">global</span> $content,$zxid,$jifen,$editor;</span><br><span class="line">$looked=<span class="number">0</span>;</span><br><span class="line">$str=<span class="string">""</span>;		       </span><br><span class="line">$sql=<span class="string">"select groupid,totleRMB from zzcms_user where username='"</span>.$_COOKIE[<span class="string">"UserName"</span>].<span class="string">"'"</span>;</span><br><span class="line">$rs=query($sql);</span><br><span class="line">$row=fetch_array($rs);				</span><br><span class="line">$totleRMB=$row[<span class="string">"totleRMB"</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!<span class="keyword">isset</span>($_POST[<span class="string">"action"</span>]) &amp;&amp; $looked==<span class="number">0</span>)&#123;</span><br><span class="line">	$str=<span class="string">"&lt;div class='box' &gt;"</span>;</span><br><span class="line">	$str=$str.<span class="string">"&lt;form name='form1' method='post' action=''&gt;"</span>;</span><br><span class="line">    $str=$str.<span class="string">"&lt;input type='submit' name='Submit2' style='height:30px' value='点击查看（注：需要"</span>.$jifen.<span class="string">"个金币,您目前有"</span>.$totleRMB.<span class="string">" 个金币）'&gt;"</span>;</span><br><span class="line">    $str=$str.<span class="string">"&lt;input name='action' type='hidden' id='action' value='kan'&gt;"</span>;</span><br><span class="line">    $str=$str.<span class="string">"&lt;/form&gt;"</span>;</span><br><span class="line">	$str=$str.<span class="string">"&lt;/div&gt;"</span>;	       </span><br><span class="line">	&#125;<span class="keyword">elseif</span> ($_POST[<span class="string">"action"</span>]==<span class="string">"kan"</span>  &amp;&amp; $looked==<span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span>( $totleRMB&gt;=$jifen) &#123;</span><br><span class="line">		query(<span class="string">"update zzcms_user set totleRMB=totleRMB-"</span>.$jifen.<span class="string">" where username='"</span>.$_COOKIE[<span class="string">"UserName"</span>].<span class="string">"'"</span>);<span class="comment">//查看时扣除积分</span></span><br><span class="line">		query(<span class="string">"update zzcms_user set totleRMB=totleRMB+"</span>.$jifen.<span class="string">" where username='"</span>.$editor.<span class="string">"'"</span>);<span class="comment">//给发布者加积分</span></span><br><span class="line">		query(<span class="string">"insert into zzcms_pay (username,dowhat,RMB,mark,sendtime) values('"</span>.$_COOKIE[<span class="string">'UserName'</span>].<span class="string">"','查看资讯信息','-"</span>.$jifen.<span class="string">"','&lt;a href=/zx/show.php?id=$zxid&gt;$zxid&lt;/a&gt;','"</span>.date(<span class="string">'Y-m-d H:i:s'</span>).<span class="string">"')"</span>);<span class="comment">//写入冲值记录</span></span><br><span class="line">		query(<span class="string">"insert into zzcms_pay (username,dowhat,RMB,mark,sendtime) values('"</span>.$editor.<span class="string">"','资讯信息售出','+"</span>.$jifen.<span class="string">"','&lt;a href=/zx/show.php?id=$zxid&gt;$zxid&lt;/a&gt;','"</span>.date(<span class="string">'Y-m-d H:i:s'</span>).<span class="string">"')"</span>);<span class="comment">//写入冲值记录  </span></span><br><span class="line">		$str=$str.showcontent($content,$zxid);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		$str=$str.<span class="string">"&lt;div class='bgcolor1' &gt;您的帐户中已不足 "</span>.$jifen.<span class="string">" 金币，暂不能查看！ &lt;br /&gt;&lt;br /&gt;"</span>;</span><br><span class="line">		$str=$str.<span class="string">"&lt;/div&gt;"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>showcontent</code>方法</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showcontent</span><span class="params">()</span></span>&#123;	<span class="comment">//分页显示资讯</span></span><br><span class="line"><span class="keyword">global</span> $content,$zxid ;</span><br><span class="line">$sql=<span class="string">"Select * From zzcms_tagzx"</span>;</span><br><span class="line">$rs=query($sql);</span><br><span class="line">$row=num_rows($rs);</span><br><span class="line"><span class="keyword">if</span> (!$row)&#123;</span><br><span class="line">$str=$content;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;	</span><br><span class="line">	$str=str_replace($row[<span class="string">"keyword"</span>],<span class="string">"&lt;a href='"</span>.$row[<span class="string">"url"</span>].<span class="string">"' target='_blank' style='color:blue'&gt;"</span>.$row[<span class="string">"keyword"</span>].<span class="string">"&lt;/a&gt;"</span>,$content);	  </span><br><span class="line">	<span class="keyword">while</span>($row=fetch_array($rs))&#123;</span><br><span class="line">	$str=str_replace($row[<span class="string">"keyword"</span>],<span class="string">"&lt;a href='"</span>.$row[<span class="string">"url"</span>].<span class="string">"' target='_blank' style='color:blue'&gt;"</span>.$row[<span class="string">"keyword"</span>].<span class="string">"&lt;/a&gt;"</span>,$str);	  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//$str=replace($str,"&lt;img","&lt;img onload='this.width=resizeimg(650,650,this)'")'css定了宽度这里不起做用</span></span><br><span class="line"><span class="comment">//以下为分页显示</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_REQUEST[<span class="string">"page"</span>]))&#123;</span><br><span class="line">$page=$_REQUEST[<span class="string">"page"</span>];</span><br><span class="line">checkid($page);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">$page=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//文章正文部分,利用explode得出共有多少页</span></span><br><span class="line">$allpage = explode(<span class="string">"#page#"</span>,$str);<span class="comment">//如果 separator 所包含的值在 string 中找不到，那么 explode() 将返回包含 string 中单个元素的数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (count($allpage)==<span class="number">1</span> || $str==<span class="string">""</span>) &#123;<span class="comment">//当str为空时直接输出</span></span><br><span class="line">$str=$str;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">if</span> ($page&gt;count($allpage) )&#123;<span class="comment">//当大于最大下标值时，使等于它</span></span><br><span class="line">$page=count($allpage)+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$str=$allpage[$page<span class="number">-1</span>];<span class="comment">//分页显示正文</span></span><br><span class="line">$str=$str. <span class="string">"&lt;div style='text-align:center;padding:20px'&gt;"</span>;</span><br><span class="line"><span class="keyword">for</span> ($i=<span class="number">1</span>;$i&lt;count($allpage)+<span class="number">1</span>;$i++)&#123;</span><br><span class="line">	<span class="keyword">if</span> (whtml==<span class="string">"Yes"</span>)&#123;</span><br><span class="line">	$str=$str. <span class="string">"&lt;a href='show-"</span>.$zxid.<span class="string">"-"</span>.$i.<span class="string">".htm'&gt;第"</span>.$i.<span class="string">"页&lt;/a&gt; "</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	$str=$str. <span class="string">"&lt;a href='?id="</span>.$zxid.<span class="string">"&amp;page="</span>.$i.<span class="string">"'&gt;第"</span>.$i.<span class="string">"页&lt;/a&gt; "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">$str=$str. <span class="string">"&lt;/div&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类似的问题还存在许多位置，应该还有利用的地方。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>任意密码重置</p>
+<ul>
+<li><p>点击找回密码，会跳到<code>/ong/getpassword.php</code>文件</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$file=<span class="string">"../template/"</span>.$siteskin.<span class="string">"/getpassword.htm"</span>;</span><br><span class="line"><span class="keyword">if</span> (file_exists($file)==<span class="keyword">false</span>)&#123;</span><br><span class="line">WriteErrMsg($file.<span class="string">'模板文件不存在'</span>);</span><br><span class="line"><span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到<code>/template/red13/getpassword.htm</code>文件</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Checkstep2</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (document.userreg.yzm_mobile.value==<span class="string">""</span>)&#123;</span><br><span class="line">	document.userreg.yzm_mobile.style.border = <span class="string">'1px solid #FF0000'</span>;</span><br><span class="line">	window.document.getElementById(<span class="string">'ts_yzm_mobile'</span>).innerHTML=<span class="string">"&lt;span class='boxuserreg'&gt;请输入验证码&lt;/span&gt;"</span>;</span><br><span class="line">	document.userreg.yzm_mobile.focus();	</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (document.userreg.yzm_mobile2.value==<span class="string">"no"</span>)&#123;</span><br><span class="line">	document.userreg.yzm_mobile.style.border = <span class="string">'1px solid #FF0000'</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">......</span><br><span class="line">	$(<span class="string">"#yzm_mobile"</span>).blur(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; <span class="comment">//jquery 中blur,change函数  </span></span><br><span class="line">	$(<span class="string">"#ts_yzm_mobile"</span>).load(encodeURI(<span class="string">"/ajax/yzm_check_ajax.php?id="</span>+$(<span class="string">"#yzm_mobile"</span>).val()));</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>漏洞出现在<code>ajax/ajax/yzm_check_ajax.php</code>中</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$id=$_GET[<span class="string">'id'</span>];<span class="comment">//ID值是传过来的$yzm_mobile</span></span><br><span class="line">$founderr=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> ($id==<span class="string">''</span>)&#123;</span><br><span class="line">$founderr=<span class="number">1</span>;</span><br><span class="line">$msg= <span class="string">"请输入验证码"</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(time()-intval(@$_SESSION[<span class="string">'yzm_sendtime'</span>])&gt;<span class="number">120</span>)&#123;</span><br><span class="line">	$founderr=<span class="number">1</span>;</span><br><span class="line">	$msg=<span class="string">"请重新获取验证码"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> ($id!=@$_SESSION[<span class="string">'yzm_mobile'</span>])&#123;</span><br><span class="line">		$founderr=<span class="number">1</span>;</span><br><span class="line">		$msg=<span class="string">"验证码不正确"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> ($founderr==<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;span class='boxuserreg'&gt;"</span>.$msg.<span class="string">"&lt;/span&gt;"</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;script&gt;window.document.userreg.yzm_mobile2.value='no';&lt;/script&gt;"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;img src=/image/dui2.png&gt;"</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;script&gt;window.document.userreg.yzm_mobile2.value='yes';&lt;/script&gt;"</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;script&gt;document.userreg.yzm_mobile.style.border = '1px solid #dddddd';&lt;/script&gt;"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这里<code>id</code>的值就是输入的验证码，<code>founderr</code>用来判断验证码是否正确</p>
+<ul>
+<li>如果等于1的话验证码就是错误的</li>
+<li>如果是正确的话就会echo三个标签</li>
+<li>仔细看的话这这个是我们之前在响应包中看到的那个带有<code>no</code>的js代码，而如果是正确的验证码的话就是<code>yes</code></li>
+<li>因此，这里应该是通过前端的代码来最终判断验证码是否正确，但是开发者却忽视了前端代码是我们可以控制的，因此可以绕过这里的验证码。</li>
+</ul>
+</li>
+<li><p>方法二是因为<code>if(time()-intval(@$_SESSION[&#39;yzm_sendtime&#39;])&gt;120)</code>时间不满足条件直接跳过if判断</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<ul>
+<li><p>任意文件删除</p>
+<ul>
+<li><p>该漏洞发生在<code>/user/adv.php</code>文件中80多行处的<code>$f</code>变量</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">.......</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_REQUEST[<span class="string">"img"</span>]))&#123;</span><br><span class="line">    $img=$_REQUEST[<span class="string">"img"</span>];</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    $img=<span class="string">""</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_REQUEST[<span class="string">"oldimg"</span>]))&#123;</span><br><span class="line">    $oldimg=$_REQUEST[<span class="string">"oldimg"</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    $oldimg=<span class="string">""</span>;</span><br><span class="line">&#125;</span><br><span class="line">.......</span><br><span class="line"><span class="keyword">if</span> ($action==<span class="string">"modify"</span>)&#123;</span><br><span class="line">  query(<span class="string">"update zzcms_textadv set adv='$adv',company='$company',advlink='$advlink',img='$img',passed=0 where username='"</span>.$_COOKIE[<span class="string">"UserName"</span>].<span class="string">"'"</span>);</span><br><span class="line">  <span class="keyword">if</span> ($oldimg&lt;&gt;$img)&#123;</span><br><span class="line">      $f=<span class="string">"../"</span>.$oldimg;</span><br><span class="line">      <span class="keyword">if</span> (file_exists($f))&#123;</span><br><span class="line">        unlink($f);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>该变量直接由<code>&quot;../&quot;</code>与<code>$oldimg</code>拼接而得，并未过滤<code>.</code>和<code>/</code>字符，导致跨目录删除文件。所以按照代码逻辑，我们只要让<code>$img</code>不等于<code>$oldimg</code>，且<code>$action</code>等于”modify”即可。</p>
+</li>
+<li><p>同样的漏洞发生在<code>/user/licence_save.php</code>30多行处</p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">........</span><br><span class="line"><span class="keyword">if</span> ($oldimg&lt;&gt;$img &amp;&amp; $oldimg&lt;&gt;<span class="string">"/image/nopic.gif"</span>)&#123;</span><br><span class="line">    $f=<span class="string">"../"</span>.$oldimg;</span><br><span class="line">    <span class="keyword">echo</span> $f.<span class="string">"=======&lt;br&gt;"</span>;</span><br><span class="line">    <span class="keyword">if</span> (file_exists($f))&#123;</span><br><span class="line">        unlink($f);</span><br><span class="line">    &#125;</span><br><span class="line">  ........</span><br><span class="line">&#125;</span><br><span class="line">........</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>该漏洞还存在于”<strong>/user/manage.php</strong>“、”<strong>/user/ppsave.php</strong>“、”<strong>/user/zssave.php</strong>“、等文件中。</p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Code-audit/" rel="tag"># Code-audit</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/Kali渗透实验笔记/" rel="next" title="Kali渗透实验笔记">
+                <i class="fa fa-chevron-left"></i> Kali渗透实验笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Klaus</p>
+              <div class="site-description motion-element" itemprop="description">Tough time don't last, tough people do.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/KlausMichael0" title="GitHub &rarr; https://github.com/KlausMichael0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -148,7 +148,7 @@
 <meta property="og:site_name" content="Klaus&#39; Blog">
 <meta property="og:description" content="记录一下一些Kali渗透实验的内容。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-10T08:23:37.000Z">
+<meta property="og:updated_time" content="2019-09-06T04:32:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kali渗透实验笔记">
 <meta name="twitter:description" content="记录一下一些Kali渗透实验的内容。">
@@ -410,12 +410,24 @@
                 
               
 
-              <time title="Created: 2019-07-10 18:11:56 / Modified: 16:23:37" itemprop="dateCreated datePublished" datetime="2019-07-10T18:11:56+08:00">2019-07-10</time>
+              <time title="Created: 2019-07-10 18:11:56" itemprop="dateCreated datePublished" datetime="2019-07-10T18:11:56+08:00">2019-07-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-06 12:32:14" itemprop="dateModified" datetime="2019-09-06T12:32:14+08:00">2019-09-06</time>
               
             
           </span>
@@ -512,12 +524,10 @@
 <li>-dns-servers：指向DNS服务器。</li>
 <li>-system-dns：指向使用系统的DNS服务器</li>
 <li>-traceroute：追踪每个路由节点</li>
-<li>其中比较常用的是-sn。表示只单独进行发现过程，-Pn表示直接跳过主机发现而进行端口扫描等高级操作（如果已经明确确定目标主机已经开启，可用该选项）；-n：如果不想使用DNS或revesr DNS解析，那么可以使用该选项。</li>
-</ul>
+<li><p>其中比较常用的是-sn。表示只单独进行发现过程，-Pn表示直接跳过主机发现而进行端口扫描等高级操作（如果已经明确确定目标主机已经开启，可用该选项）；-n：如果不想使用DNS或revesr DNS解析，那么可以使用该选项。</p>
 </li>
-</ul>
-<ul>
-<li>-sS/sT/sA/sW/sW :指定使用TCP</li>
+<li><p>-sS/sT/sA/sW/sW :指定使用TCP</p>
+</li>
 <li>-O：探测主机所运行的操作系统类型</li>
 <li>SYN/CONNECT()/ACK/window/Maimon Scans的方式来对目标主机进行扫描</li>
 <li>-sU ：指定使用UDP扫描方式确定目标主机的UDP端口状态。</li>
@@ -537,6 +547,8 @@
 <li>-top-ports&lt; number &gt;:扫描开放概率最高的number个端口，默认情况下，nmap会扫描最有可能的1000个TCP端口</li>
 <li>-port-ratio&lt; ratio&gt;:扫描指定频率以上的端口，</li>
 <li>-sS表示使用TCP SYN方式扫描TCP端口，-sU表示扫描UDP端口，-T4表示时间级别配置4级，-top-ports 300表示扫描最有可能开放的300个端口（tcp和udp分别有300个端口)</li>
+</ul>
+</li>
 </ul>
 <ul>
 <li>-f -mtu:指定使用分片。指定数据包的MTU.</li>
@@ -575,7 +587,7 @@
 </li>
 <li><p>Web应用程序和检查框架w3af</p>
 <ul>
-<li>详情参见[实验部分](</li>
+<li>详情参见<a href="https://klaus.netlify.com/2019/07/05/web%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%94%BB%E5%87%BB%E5%92%8C%E6%A3%80%E6%9F%A5%E6%A1%86%E6%9E%B6w3af/#more" target="_blank" rel="noopener">实验部分</a></li>
 </ul>
 </li>
 </ul>
